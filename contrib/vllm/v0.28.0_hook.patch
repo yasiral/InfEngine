@@ -1,0 +1,80 @@
+# InfEngine modifications to Apache-2.0 upstream source; see NOTICE and third_party/.
+From: infengine control-plane
+Subject: [PATCH] Expose safe runtime scheduler-config control on EngineCore (vLLM v0.28.0)
+
+Add EngineCore.set_runtime_scheduler_config()/get_runtime_scheduler_config()
+with an explicit allowlist limited to `long_prefill_token_threshold`.
+
+This is the minimum upstream-shaped hook required to mutate one EngineCore-only
+scheduler policy at runtime without restarting EngineCore or GPU workers.
+No scheduler rebuild, no worker RPC, no CUDA graph recapture.
+
+Client-side transport (AsyncLLM / EngineCoreClient / AsyncMPClient / SyncMPClient
+/ InprocClient) reuses the existing EngineCoreRequestType.UTILITY dispatch and
+mirrors the existing pause_scheduler / get_weight_version patterns — see
+contrib/vllm/README.md for the exact method snippets.
+
+The allowlist is intentionally tiny and mirrors the control-plane spec in the
+infengine repo (src/infengine/vllm/validation.py). Do NOT open it into a
+generic setattr backdoor.
+
+Apply against vLLM v0.28.0 with:
+    git apply --3way contrib/vllm/v0.28.0_hook.patch
+(the hunk applies with fuzz; line numbers are approximate — the anchor is the
+get_weight_version / preprocess_add_request pair at the end of class EngineCore.)
+
+--- a/vllm/v1/engine/core.py
++++ b/vllm/v1/engine/core.py
+@@ -945,6 +945,56 @@ class EngineCore:
+     def get_weight_version(self) -> str:
+         """Return the latest committed weight version."""
+         return self._weight_version
++
++    # Runtime scheduler-config control (safe, allowlisted). The allowlist is
++    # intentionally tiny and mirrors the control-plane spec in the infengine
++    # repo (src/infengine/vllm/validation.py). Do NOT open this into a generic
++    # setattr backdoor.
++    RUNTIME_SCHEDULER_CONFIG_ALLOWLIST = {
++        # field -> (dtype, min, max)
++        "long_prefill_token_threshold": (int, 0, None),
++    }
++
++    def set_runtime_scheduler_config(self, overrides: dict) -> dict:
++        """Apply a validated runtime scheduler-config override in place.
++
++        Only allowlisted fields may be set; values are type/range validated.
++        All overrides are validated before any is applied (atomic). Returns
++        the resulting observed values. No scheduler rebuild, no worker RPC,
++        no CUDA graph recapture, no process restart.
++        """
++        sc = self.vllm_config.scheduler_config
++        validated: dict = {}
++        for field, value in overrides.items():
++            spec = self.RUNTIME_SCHEDULER_CONFIG_ALLOWLIST.get(field)
++            if spec is None:
++                raise ValueError(f"unknown runtime scheduler config field: {field!r}")
++            dtype, lo, hi = spec
++            if isinstance(value, bool) or not isinstance(value, dtype):
++                raise ValueError(
++                    f"{field}: expected {dtype.__name__}, got {type(value).__name__!r}"
++                )
++            if lo is not None and value < lo:
++                raise ValueError(f"{field}: {value} below minimum {lo}")
++            if hi is not None and value > hi:
++                raise ValueError(f"{field}: {value} above maximum {hi}")
++            validated[field] = value
++        for field, value in validated.items():
++            setattr(sc, field, value)
++        return dict(validated)
++
++    def get_runtime_scheduler_config(self) -> dict:
++        """Return the live EngineCore scheduler-config values (allowlisted)."""
++        sc = self.vllm_config.scheduler_config
++        return {
++            "long_prefill_token_threshold": sc.long_prefill_token_threshold,
++        }
+ 
+     def preprocess_add_request(self, request: EngineCoreRequest) -> tuple[Request, int]:
+         """Preprocess the request.
+--
+2.47.0

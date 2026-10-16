@@ -1,0 +1,8 @@
+# Multi-control policy: all controls applied through ONE infengine apply.
+# Preflight validates every field; if any field is invalid, NOTHING is applied.
+# Apply with:  infengine apply examples/policy-multi.yaml
+# Verify:      infengine inspect
+# Restore:     infengine restore
+runtime_concurrency: 32
+runtime_max_scheduled_tokens: 1024
+runtime_kv_watermark: 0.1

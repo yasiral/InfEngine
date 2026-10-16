@@ -1,0 +1,37 @@
+# InfEngine product image (reproducible build definition).
+#
+#   docker build -f contrib/vllm/Dockerfile.infengine \
+#     -t infengine-vllm:0.1.0-vllm0.28.0 .
+#
+# Bakes in the exact supported vLLM version, the InfEngine runtime hook and the
+# control listener. The operator does NOT run apply_hook.py in the normal pilot
+# path. Validate the build locally before publishing; this file is a definition,
+# not a published artifact.
+FROM vllm/vllm-openai:v0.28.0
+
+# --- 1. Apply the vLLM runtime scheduler-config hook (idempotent) ----------
+COPY contrib/vllm/apply_hook.py /workspace/apply_hook.py
+RUN python3 /workspace/apply_hook.py
+
+# --- 2. Compatibility entrypoint + control listener -------------------------
+# The product image runs ONLY the patched vLLM engine and the narrow control
+# listener; the InfEngine control plane runs on the host. The infengine Python
+# package is intentionally NOT copied here (it imports torch and the full engine
+# stack, which is irrelevant inside the engine image).
+COPY contrib/vllm/infengine_control.py /workspace/infengine_control.py
+COPY contrib/vllm/compat_check.py /workspace/compat_check.py
+
+# WSL2 GPU passthrough requires enabling pinned memory (vLLM gates UVA behind it).
+ENV VLLM_WSL2_ENABLE_PIN_MEMORY=1
+
+# The listener is enabled only when INFENGINE_CONTROL_PORT is set at runtime.
+# INFENGINE_CONTROL_TOKEN is REQUIRED and supplied as a secret at runtime.
+EXPOSE 8000 9001
+
+# Fail closed at build time if the engine version is unsupported or the hook is
+# missing. Do NOT weaken this with `|| true`.
+RUN python3 /workspace/compat_check.py
+
+ENTRYPOINT ["python3", "/workspace/infengine_control.py"]
+# Default vLLM args; override at `docker run` time.
+CMD ["--model", "Qwen/Qwen2.5-0.5B-Instruct", "--port", "8000"]

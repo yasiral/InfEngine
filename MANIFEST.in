@@ -1,0 +1,2 @@
+include LICENSE NOTICE THIRD_PARTY_NOTICES.md README.md
+recursive-include third_party *

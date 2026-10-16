@@ -1,0 +1,35 @@
+# Multi-control policy A/B evaluation.
+#
+#   INFENGINE_ENGINE_URL=http://127.0.0.1:8000 \
+#   INFENGINE_CONTROL_URL=http://127.0.0.1:8010 \
+#   infengine evaluate examples/evaluation-multi.yaml --report evaluation.html
+#
+# Both baseline and candidate are full policies. The evaluator verifies EVERY
+# control after apply and restores the captured pre-experiment state at the end.
+experiment:
+  experiment_id: multi-control-smoke
+  engine: vllm
+  model: Qwen2.5-0.5B-Instruct
+
+  workload:
+    profile: closed_loop
+    offered_concurrency: 16
+    duration_seconds: 20
+
+  baseline:
+    runtime_concurrency: 16
+    runtime_max_scheduled_tokens: 512
+
+  candidate:
+    runtime_concurrency: 8
+    runtime_max_scheduled_tokens: 256
+
+  warmup_requests: 8
+  repetitions: 2
+  alternate: true
+
+  measurement:
+    window_s: 5
+    poll_interval_s: 1
+    min_polls: 3
+    min_requests: 4

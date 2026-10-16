@@ -1,0 +1,17 @@
+# InfEngine patched SGLang product image (reproducible build definition).
+#
+#   docker build -f contrib/sglang/Dockerfile.infengine -t infengine-sglang:0.1.0-sglang0.5.18 .
+#
+# SGLang keeps its own native deployment semantics; this only bakes in the
+# canonical runtime_max_prefill_tokens scheduler knob so the InfEngine control
+# plane can read/mutate it through /server_info -> internal_states.
+FROM lmsysorg/sglang:v0.5.18
+
+COPY contrib/sglang/v0.5.18_runtime_prefill_budget.patch /tmp/runtime_prefill.patch
+
+RUN cd /sgl-workspace/sglang && \
+    (git apply /tmp/runtime_prefill.patch 2>/dev/null || patch -p1 < /tmp/runtime_prefill.patch) && \
+    test "$(grep -c runtime_max_prefill_tokens python/sglang/srt/managers/scheduler.py)" -ge 1 && \
+    echo "sglang runtime_max_prefill_tokens patch applied"
+
+EXPOSE 30000

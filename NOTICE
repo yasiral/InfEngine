@@ -1,0 +1,22 @@
+InfEngine
+Copyright 2026 InfEngine contributors
+
+This distribution includes modifications and integration code for:
+
+vLLM 0.28.0, vLLM project contributors
+https://github.com/vllm-project/vllm/tree/v0.28.0
+Licensed under the Apache License, Version 2.0.
+The modifications expose runtime scheduler policy mutation/readback, native
+utility transport and a separate authenticated listener. Original upstream
+files named in the included patches remain attributed to their authors.
+
+SGLang 0.5.18, SGLang Team
+Copyright 2023-2024 SGLang Team
+https://github.com/sgl-project/sglang/tree/v0.5.18
+Licensed under the Apache License, Version 2.0.
+The included scheduler patch adds a bounded runtime prefill input-admission
+field, native validation and native readback. It does not replace upstream
+provisioning or remove the first-request admission exception.
+
+License copies and exact scope are provided in third_party/ and
+THIRD_PARTY_NOTICES.md. No upstream endorsement is claimed.

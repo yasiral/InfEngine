@@ -1,0 +1,4 @@
+# Single-control policy: change one control.
+# Apply with:  infengine apply examples/policy-single.yaml
+# Dry-run:     infengine apply examples/policy-single.yaml --dry-run
+runtime_concurrency: 32

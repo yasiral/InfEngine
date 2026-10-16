@@ -1,0 +1,77 @@
+# InfEngine modifications to Apache-2.0 upstream source; see NOTICE and third_party/.
+diff --git a/python/sglang/srt/managers/scheduler.py b/python/sglang/srt/managers/scheduler.py
+index 7dc5be833f..5eb9ffe82a 100644
+--- a/python/sglang/srt/managers/scheduler.py
++++ b/python/sglang/srt/managers/scheduler.py
+@@ -1156,6 +1156,7 @@ class Scheduler(
+         self.session_controller = SessionController(self.tree_cache)
+         self.forward_sleep_time = None
+         self._engine_paused = False
++        self.runtime_max_prefill_tokens = self.max_prefill_tokens
+ 
+     def init_chunked_prefill(self):
+         self.chunked_prefill_size = get_schedule().chunked_prefill_size
+@@ -3260,7 +3261,7 @@ class Scheduler(
+             self.token_to_kv_pool_allocator,
+             running_batch,
+             self.new_token_ratio_tracker.current,
+-            self.max_prefill_tokens,
++            self.runtime_max_prefill_tokens,
+             chunked_prefill_size,
+             running_bs if self.is_mixed_chunk else 0,
+             self.priority_scheduling_preemption_threshold,
+@@ -4297,6 +4298,10 @@ class Scheduler(
+         )
+         ret["startup_time"] = self.startup_time
+         ret["effective_max_running_requests_per_dp"] = self.max_running_requests
++        # Expose the scheduler-local runtime prefill admission budget through the
++        # standard /server_info -> internal_states observation surface so the
++        # control plane can read the ACTUAL scheduler value (no shadow state).
++        ret["runtime_max_prefill_tokens"] = self.runtime_max_prefill_tokens
+ 
+         if get_exec().moe.elastic_ep_backend is not None:
+             from sglang.srt.elastic_ep.elastic_ep import ElasticEPStateManager
+@@ -4336,6 +4341,7 @@ class Scheduler(
+         args_allow_update = set(
+             [
+                 "pp_max_micro_batch_size",
++                "runtime_max_prefill_tokens",
+                 "speculative_accept_threshold_single",
+                 "speculative_accept_threshold_acc",
+                 "dspark_force_budget_frac",
+@@ -4357,6 +4363,24 @@ class Scheduler(
+                 )
+                 if_success = False
+                 break
++            elif k == "runtime_max_prefill_tokens":
++                # STRICT type validation: accept genuine int only. Reject
++                # str/float/None/bool BEFORE any comparison (comparing a
++                # non-int against max_prefill_tokens would raise TypeError and
++                # crash the scheduler), and never coerce (int(2.5) -> 2 would
++                # silently change operator intent).
++                if isinstance(v, bool) or not isinstance(v, int):
++                    logging.warning(
++                        f"Updating {k} to {v!r} is rejected because it must be an integer."
++                    )
++                    if_success = False
++                    break
++                if v < 1 or v > self.max_prefill_tokens:
++                    logging.warning(
++                        f"Updating {k} to {v} is rejected because it is out of the valid range [1, {self.max_prefill_tokens}]."
++                    )
++                    if_success = False
++                    break
+             elif k == "dspark_force_budget_frac":
+                 if not self.spec_algorithm.is_dspark() or not hasattr(
+                     self.draft_worker, "set_dspark_forced_budget_frac"
+@@ -4405,6 +4429,10 @@ class Scheduler(
+                 )
+             if remaining.pop("dspark_clear_info_records", None):
+                 self.draft_worker.clear_info_records()
++            # runtime_max_prefill_tokens is a local scheduler field, not a config leaf
++            runtime_prefill = remaining.pop("runtime_max_prefill_tokens", None)
++            if runtime_prefill is not None:
++                self.runtime_max_prefill_tokens = runtime_prefill
+             if remaining:
+                 get_context().override(source="update_server_args", **remaining)
+             logger.info(f"Config updated via context override: {remaining}")

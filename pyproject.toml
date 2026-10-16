@@ -1,0 +1,42 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "infengine"
+version = "0.1.0"
+description = "Governed runtime control and workload evaluation for patched vLLM and SGLang"
+license = "Apache-2.0"
+license-files = ["LICENSE", "NOTICE", "THIRD_PARTY_NOTICES.md", "third_party/*LICENSE"]
+requires-python = ">=3.9"
+dependencies = [
+  "torch>=2.1",
+  "transformers>=4.40",
+  "tokenizers>=0.19",
+  "huggingface_hub",
+  "safetensors",
+  "numpy",
+]
+optional-dependencies = { dev = ["pytest"], serve = ["fastapi", "uvicorn"], eval = ["pyyaml"] }
+
+[project.urls]
+Repository = "https://github.com/yasiral/InfEngine"
+Documentation = "https://github.com/yasiral/InfEngine/blob/main/README.md"
+Article = "https://puristan.com/posts/infengine-runtime-control/"
+
+[project.scripts]
+infengine = "infengine.unified:main"
+infengine-cli = "infengine.cli:main"
+infengine-serve = "infengine.serve:main"
+infengine-operator = "infengine.operator:main"
+infengine-bench = "infengine.bench:main"
+infengine-sweep = "infengine.sweep:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = [
+    "integration: live GPU/vLLM integration tests (require VLLM_INTEGRATION=1 and a GPU)",
+]
