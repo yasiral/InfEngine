@@ -1,80 +1,119 @@
 # InfEngine
 
-Verified runtime control and workload evaluation for **patched vLLM 0.28.0** and **patched SGLang 0.5.18**.
+**Inspect, change and verify live inference policies. Measure the trade-offs before choosing a configuration.**
 
-InfEngine gives inference engineers a governed way to inspect supported runtime policies, change them within native bounds, verify their application, compare workload effects and restore recorded settings. It does not know the optimal configuration for every workload. A throughput gain can cost first-token latency, and a control that works correctly can be ineffective when another constraint dominates.
+**InfEngine** is an open-source control and evaluation layer for patched **vLLM** and **SGLang**. It helps inference engineers inspect live scheduler settings, make bounded changes, verify what the engine actually applied, compare workload outcomes, and restore recorded policies. Model requests continue to flow directly to the serving engine; InfEngine is not an inference proxy.
 
-**Release status: research/pilot implementation, version 0.1.0.** Live acceptance covers the versions and single-GPU envelope described below. This is not production certification or unattended optimization. The code includes a small reference inference engine for development; deployed inference traffic goes directly to vLLM or SGLang.
+[Read the engineering case study](https://puristan.com/posts/infengine-runtime-control/) · [Get started](docs/QUICKSTART.md) · [Architecture](docs/ARCHITECTURE.md) · [Supported controls](docs/CONTROL_REFERENCE.md)
 
-Read the engineering article at [Puristan](https://puristan.com/posts/infengine-runtime-control/), the [control reference](docs/CONTROL_REFERENCE.md), [deployment instructions](docs/DEPLOYMENT.md) and [architecture](docs/ARCHITECTURE.md).
+**Status:** v0.1.0 research/pilot. Live control requires patched **vLLM 0.28.0** or **SGLang 0.5.18**; arbitrary unmodified releases are not supported.
 
-## Supported runtime controls
+## Why live policy changes need verification
 
-These are the initial validated controls, not an architectural ceiling. No additional actuator is implied to be implemented.
+A model server that performs well with short chat requests can behave very differently when longer prompts, document-processing tasks, or bursts of concurrent users arrive. The engineer must decide whether to change the concurrency limit, the amount of work scheduled per step, or another admission rule. **The same change can improve throughput and worsen time to first token**—or have almost no effect because another constraint is already limiting the scheduler.
 
-| vLLM HOT control | Native mapping and purpose | Bounds and evidence |
-|---|---|---|
-| `runtime_concurrency` | `scheduler.max_num_running_reqs`; upper bound on running admissions | Integer 1 through provisioned `max_num_seqs`; native acceptance; selected A100 A/B and factorial measurements |
-| `runtime_max_scheduled_tokens` | `scheduler.max_num_scheduled_tokens`; total scheduled tokens in a step, prefill plus decode | Integer 1 through provisioned scheduled-token ceiling; native acceptance; A100 A/B and factorial measurements |
-| `long_prefill_token_threshold` | `scheduler_config.long_prefill_token_threshold`; per-prompt prefill restriction for a long prompt in a step | Nonnegative integer; zero disables this restriction; native acceptance and one A100 A/B comparison |
-| `runtime_kv_watermark` | `scheduler.kv_cache_manager.watermark_blocks`; reserves admission headroom as a fraction of existing blocks | Float in `[0.0, 1.0)`, exclusive upper bound; native acceptance, no A100 performance characterization |
-| `runtime_reserve_full_isl` | `scheduler.scheduler_reserve_full_isl`; full-input versus first-chunk admission reservation | Boolean; future admissions only; native acceptance, no A100 performance characterization |
+A successful configuration API response does not answer the operational question. We need to know that the *native running scheduler* changed, what happened to performance under a defined workload, and whether the previous policy can be restored. InfEngine brings these steps together without claiming to choose an optimal configuration automatically.
 
-| SGLang HOT control | Native mapping and purpose | Bounds and evidence |
-|---|---|---|
-| `runtime_concurrency` | `pp_max_micro_batch_size`; per-rank admission ceiling, also constrained by request-token pool slots | Integer 1 through provisioned `max_running_requests` for proven PP=1/DP=1; native acceptance, no A100 performance study |
-| `runtime_max_prefill_tokens` | Scheduler-local prefill input-admission budget | Integer 1 through provisioned `max_prefill_tokens`; native acceptance, no A100 performance study |
+## When to use InfEngine
 
-SGLang's prefill budget has a **first-request exception**. It is not a strict per-request cap or an equivalent of vLLM's total-step budget. `runtime_concurrency` is an operator alias for internal `runtime_max_running_seqs`; it is not an extra actuator.
-
-These settings change scheduler/admission policy inside provisioned resources. They do not reload the model, resize KV pools or change CUDA graph provisioning. Cache resets are separate one-shot operations: the vLLM HTTP transport does not expose its in-process DRAIN/reset path; SGLang engine flush requires existing idleness and returns BLOCKED when busy. SGLang `prefix_cache_reset` is unsupported.
-
-Native implementation, live verification, measured performance effect and benefit for an operational objective are different claims. Individual acceptance exists for all seven settings; performance evidence does not cover all seven.
+| Scenario | InfEngine provides |
+|---|---|
+| **Investigate rising latency or queues** | Inspect the engine's actual runtime policy, supported controls, current limits and telemetry quality. |
+| **Test a different scheduling policy** | Apply a bounded change and verify it through native readback, without reloading the model. |
+| **Compare alternatives under load** | Run an explicit baseline/candidate experiment with recorded throughput, latency, queueing and incomplete work where available. |
+| **Adjust several controls** | Validate the complete policy, apply it against an expected revision, and report verification or partial recovery. |
+| **Keep changes reviewable** | Require human approval where appropriate, record the actor and outcome, and restore settings from a recorded pre-state. |
 
 ## Architecture
 
-```mermaid
-flowchart LR
-  O[Operator or approved proposal] --> C[InfEngine control API]
-  C --> R[Desired/observed reconciler]
-  R --> A[Engine adapter]
-  A --> V[vLLM native utility hook]
-  A --> S[SGLang internal-state transport]
-  V --> E[Running serving engine]
-  S --> E
-  I[Inference clients] --> E
-  E --> T[Native telemetry and quality]
-  T --> P[Observe-only supervisor]
-  P --> H[Human approval]
-  H --> C
-  X[Explicit evaluator] --> C
-  T --> X
-```
+Inference requests still go directly to vLLM or SGLang. InfEngine communicates through the supported native control integration and collects evidence outside the inference request path. An observe-only supervisor can **propose** a change for human approval. Authenticated operators can also apply policies directly, or launch an explicit evaluation. Restoration is a verified operation; it cannot undo all prior side effects.
 
-Manual changes, approved proposals and explicitly launched evaluation phases use the same reconciliation path. Policies are prevalidated, revision-bound and verified by native readback. vLLM uses a coordinated multi-field request; SGLang applies fields sequentially. Neither has an engine-atomic guarantee. Compensation and restoration have explicit outcomes and can fail; restoring settings does not undo completed requests or cache history.
+![Architecture showing inference clients accessing vLLM or SGLang directly while InfEngine performs policy validation, native control, readback and evaluation alongside the engine.](docs/assets/readme/infengine_architecture.svg)
 
-The supervisor proposes changes but cannot authorize its own mutations. Authenticated roles distinguish viewers, operators and approvers. SQLite audit history records actor, revision, requested policy, pre/post state, verification and recovery. The evaluator temporarily changes baseline/candidate policies and attempts original-state restoration; it never automatically deploys a winner.
+Policies are revision-bound and checked against native limits. vLLM applies a coordinated multi-field request; SGLang applies fields sequentially. Neither provides an engine-atomic transaction. The reconciler reports convergence or recovery outcomes, and the audit history records the actor and pre/post state.
 
-## Prerequisites and installation
+[Read the architecture and failure semantics](docs/ARCHITECTURE.md)
 
-- Python 3.11 is the recommended release-check environment. Package metadata retains the implementation's minimum Python 3.9 declaration; other Python versions were not freshly qualified for this release.
-- The host control plane needs the dependencies declared in `pyproject.toml`. It does not need to run model generation on a GPU.
-- Live integrations need Docker/WSL2 or a suitable Linux NVIDIA environment, NVIDIA container support, and one compatible GPU with enough free memory for the chosen model and execution configuration.
-- Recorded functional acceptance used a 4 GiB Quadro T2000 and a small Qwen model; recorded performance measurements used one A100 80 GB PCIe and Qwen2.5-7B-Instruct. These are different evidence scopes, not universal memory requirements.
-- Engine compatibility is pinned to patched **vLLM 0.28.0** and **SGLang 0.5.18**, with SGLang PP=1, DP=1, text/token serving. Other engine versions, speculative/disaggregated modes and distributed coordination are not validated.
+## Verified control and measured performance
+
+We separate two questions: **Did the configuration change reach the running engine?** and **Did that change improve the workload's performance?** A reliable control path is necessary, but it cannot establish a performance benefit on its own.
+
+### Native control and inference continuity
+
+In an A100 smoke test on patched vLLM 0.28.0, we inspected the runtime concurrency limit (**64**), changed it to **16**, verified the native value, completed an inference request successfully, and restored **64**. The API-server process ID remained **3695** during the recorded sequence.
+
+![Four-stage verified live control sequence: inspect concurrency 64, apply and verify 16, serve HTTP 200, restore and verify 64.](docs/assets/readme/live_control_verification.svg)
+
+**What this establishes:** verified live policy change, functioning inference and restoration without restarting the identified API server. It does **not** measure a throughput gain or establish the identity of vLLM's separate EngineCore process.
+
+### Concurrency and token budget interaction
+
+We then evaluated actual scheduling behavior. In one **A100 80 GB PCIe / Qwen2.5-7B-Instruct BF16** experiment, we tested **two concurrency limits (64 and 32)** against **two per-step token budgets (8,192 and 1,024)**. Prefix caching was disabled to avoid contamination between experimental phases; each of the four combinations was measured in three interleaved blocks, with offered concurrency 96 and 60-second measurement windows. CUDA graphs remained enabled.
+
+![A100 factorial interaction: at 8192 scheduled tokens, reducing concurrency from 64 to 32 increased request throughput from 2.722 to 3.222 requests per second; at 1024 tokens, it changed little at around 2.91.](docs/assets/readme/concurrency_token_interaction.svg)
+
+The concurrency effect depended on the token budget:
+
+| Scheduled tokens per step | Requests/s at concurrency 64 → 32 | Change |
+|---|---|---|
+| 8,192 | 2.722 → 3.222 | +0.500 requests/s |
+| 1,024 | 2.916 → 2.911 | −0.006 requests/s |
+
+The difference between these two effects was **+0.505588 requests/s**. These are cell means across three blocks, rounded for display; the chart uses a zoomed y-axis. At the lower token budget, the means of block-level TTFT p95 estimates were about **39 seconds**, compared with **19–19.5 seconds** at the higher budget. Those summaries are not pooled request percentiles. The [factorial summary](https://puristan.com/posts/infengine-runtime-control/assets/data/2x2_summary.json) and [per-block measurements](https://puristan.com/posts/infengine-runtime-control/assets/data/2x2_per_block.csv) provide the underlying numbers.
+
+**Why this matters:** changing one knob without controlling the others can lead to a misleading recommendation. These are workload-specific measurements, not an InfEngine speedup claim or a universal tuning rule. The [full technical article](https://puristan.com/posts/infengine-runtime-control/) includes the earlier prefix-cache confound, latency trade-offs, all experimental figures and downloadable measurements.
+
+## Initial supported controls
+
+InfEngine deliberately started with **runtime scheduling and admission policy** that could be changed inside resources provisioned when the model server launched. It does not dynamically change tensor parallelism, model weights, KV cache allocation size or CUDA graph provisioning.
+
+### Patched vLLM 0.28.0
+
+| HOT control | What changes and where it is bounded |
+|---|---|
+| `runtime_concurrency` | Running-request admission ceiling, from 1 through provisioned `max_num_seqs`. Other admission gates can bind first. |
+| `runtime_max_scheduled_tokens` | Total prefill **and** decode tokens scheduled per step, within the provisioned token ceiling. Not a request's output length. |
+| `long_prefill_token_threshold` | Per-prompt long-prefill allowance within a step. Nonnegative integer; zero disables this restriction. |
+| `runtime_kv_watermark` | Admission headroom as a fraction of existing KV blocks, in `[0.0, 1.0)`. Does not resize the KV pool. |
+| `runtime_reserve_full_isl` | Boolean: reserve KV for the complete input or allow chunked input admission. Applies to future admissions. |
+
+### Patched SGLang 0.5.18
+
+| HOT control | What changes and where it is bounded |
+|---|---|
+| `runtime_concurrency` | Per-rank running-request ceiling, from 1 through provisioned `max_running_requests`; also limited by request-token pool slots. Validated at PP=1, DP=1. |
+| `runtime_max_prefill_tokens` | Scheduler-local aggregate prefill admission budget, from 1 through provisioned `max_prefill_tokens`. The first request is exempt. |
+
+These **five vLLM** and **two SGLang** controls are the initial verified surface, not a claim of identical support. SGLang's prefill control has a first-request exception and is **not equivalent** to vLLM's total scheduled-token budget. All seven have documented functional acceptance; the A100 performance study covers selected **vLLM** controls, not all seven. `runtime_concurrency` aliases internal `runtime_max_running_seqs`; it is not an additional actuator. See [native mappings, bounds and limitations](docs/CONTROL_REFERENCE.md). Cache reset/flush operations have separate idle/drain requirements and transport limits; they are not persistent runtime controls.
+
+## Try InfEngine
+
+Use **Python 3.11**, the release-check environment, for the host control plane. Live serving needs a suitable NVIDIA GPU, sufficient memory for the selected model, and Linux or Docker/WSL2 with NVIDIA container support. A100 hardware is not required for the functional pilot; the A100 measurements are a separate performance study.
 
 ```bash
 git clone https://github.com/yasiral/InfEngine.git
 cd InfEngine
 python -m venv .venv
 source .venv/bin/activate
-python -m pip install -e ".[dev,serve,eval]"
+python -m pip install -e ".[serve,eval]"
 infengine version
 ```
 
-On Windows, activate with `.venv\Scripts\Activate.ps1`. Engine containers need an existing GPU; the following deployment commands build images and may download upstream images/model weights. They are instructions, not work performed by the release process.
+On Windows, activate with `.venv\Scripts\Activate.ps1`. Package metadata declares Python ≥3.9, but other versions were not freshly qualified for the release.
 
-## Launch the supported vLLM deployment
+After [starting a supported engine and InfEngine service](docs/DEPLOYMENT.md), configure the operator shell with `INFENGINE_CONTROL_URL`, `INFENGINE_TOKEN` and `INFENGINE_ACTOR`. Use the credentials configured for that service, then inspect before changing it:
+
+```bash
+infengine doctor
+infengine inspect --json
+infengine capabilities --supported-only
+infengine explain runtime_concurrency
+```
+
+`doctor` does not require telemetry for readiness. Check metric availability separately before relying on performance reports or latency guardrails.
+
+<details>
+<summary><strong>Launch the supported vLLM container and control service</strong></summary>
 
 Use a trusted local host and keep administrative ports on loopback. Generate separate engine-hop and operator credentials in the shell; do not commit them:
 
@@ -107,18 +146,13 @@ The final command stays in the foreground. Run the next commands in another shel
 
 For SGLang, use the separate build and run commands in [DEPLOYMENT.md](docs/DEPLOYMENT.md). Its integration reuses native `set_internal_state` transport and adds only the scheduler-local prefill hook. Do not apply the vLLM token policy or image assumptions to SGLang.
 
-## Inspect, apply, verify and restore
 
-```bash
-infengine doctor
-infengine inspect --json
-infengine capabilities --supported-only
-infengine explain runtime_concurrency
-```
+</details>
 
-`doctor` does not make telemetry a readiness gate. Check metric availability separately before relying on performance reports or latency guardrails.
+<details>
+<summary><strong>Apply and restore a policy against the inspected revision</strong></summary>
 
-Capture the actual desired-state revision rather than copying an example integer:
+Use an engine you control and inspect its provisioning before applying the bundled vLLM example. Capture the actual revision:
 
 ```bash
 REVISION="$(infengine inspect --json | python -c 'import json,sys; print(json.load(sys.stdin)["revision"])')"
@@ -136,42 +170,35 @@ The example policy is for the documented vLLM provisioning; inspect live bounds 
 
 Human review is separate from direct operator mutation. An appropriately authenticated approver can use `infengine review examples/policy-multi.yaml`; the whole policy, revision, expiry and fresh pre-state are bound to the reviewed proposal. See [RECIPES.md](docs/RECIPES.md) for role and workflow details.
 
-## Evaluate a candidate policy
 
-An evaluation is an intentional authorization for temporary policy changes on an engine you control:
+</details>
+
+To evaluate a policy, explicitly authorize temporary baseline/candidate changes on that deployment:
 
 ```bash
 infengine evaluate examples/evaluation-multi.yaml \
   --engine-url http://127.0.0.1:8000 --report evaluation.html
 ```
 
-The YAML defines full baseline/candidate maps, workload, warmup, repetitions and measurement requirements. Before evaluation, the desired state must contain the controls to restore; the evaluator rejects a phase it cannot safely preflight. Inspect per-control verification, missing fields, unfinished/drained requests and restore results before reading the trade-off label. An unavailable metric is not zero or proof of equivalence. A `finally` path guarantees an attempt, not successful restoration under every failure.
+Inspect native verification, metric availability, unfinished/drained requests and restoration results before interpreting the report. The evaluator attempts to restore the original settings; it does not automatically deploy a winner or guarantee successful recovery.
 
-## Tests
+Continue with the [quickstart](docs/QUICKSTART.md) for a revision-bound policy change, [operator recipes](docs/RECIPES.md) for approval and restoration, or the [deployment guide](docs/DEPLOYMENT.md) for experimental evaluation. These actions can change a running service, so use a deployment you control and secure its administrative interfaces.
+
+## Tests and limitations
 
 ```bash
+python -m pip install -e ".[dev,serve,eval]"
 python -m pytest -q -m "not integration"
 ```
 
-These tests use fakes and the built-in/reference engine. Live integration tests are separately marked and opt-in through `VLLM_INTEGRATION=1` or `SGLANG_INTEGRATION=1`, requiring the corresponding patched engine/GPU. Do not enable them against a shared service without authorizing workload and mutations. See [release verification](docs/RELEASE_VERIFICATION.md) for the fresh local result and tests not run.
+The local suite uses fakes, local HTTP fixtures and the built-in reference engine. GPU tests are separate opt-in tests for the patched runtimes. Do not run them against a shared service without authorizing the workload and policy changes.
 
-## Limitations and source layout
+**Scope and status:** local single-GPU pilot acceptance is documented; the A100 experiment concerns patched vLLM, not SGLang. This project is not a production-certified automatic optimizer, fleet orchestrator or engine-atomic distributed controller. The release verification reports **619 local tests passed with nine live GPU tests excluded**, separate from historical live acceptance. See [release verification](docs/RELEASE_VERIFICATION.md) and [limitations](docs/COMPATIBILITY.md).
 
-The pilot has no fleet-wide control guarantee, no cross-engine performance ranking and no universal best settings. Desired-state, revision and audit persistence are separate stores; this is not a distributed, crash-atomic transaction system. Pending approvals have a separate process lifecycle. Remote use needs authentication, protected native admin endpoints and externally terminated TLS. Engine atomicity, successful compensation and latency availability must not be inferred from a successful API response.
+The pilot does not establish fleet-wide coordination, cross-engine performance rankings or distributed crash-atomic state changes. Remote use needs authenticated control access, protected native administrative endpoints and externally terminated TLS. Restoration changes settings; it cannot undo completed requests or cache history.
 
-| Path | Purpose |
-|---|---|
-| `src/infengine/control/` | Capability contract, desired/observed state and reconciler |
-| `src/infengine/vllm/`, `sglang/` | Native adapters and readback transports |
-| `src/infengine/supervisor/` | Observe-only policy, human approval and assessment |
-| `src/infengine/telemetry/` | Native collectors, windows, quality and histogram semantics |
-| `src/infengine/unified.py`, `serve.py`, `experiment.py` | CLI, control API and evaluation |
-| `contrib/` | Engine patches, listener, compatibility gate and Docker build definitions |
-| `examples/` | Policy and evaluation YAML |
-| `tests/` | Unit, local API and opt-in live integration tests |
-
-Original development history, private experimental environments, raw archives, caches and model weights are not part of this public release. Measured article findings remain scoped to their documented experiments.
+Explore the [reconciler](src/infengine/control/), [engine integrations](contrib/), [telemetry](src/infengine/telemetry/) and [policy/evaluation examples](examples/) for the implementation behind this workflow.
 
 ## License
 
-InfEngine's own code is released under [Apache-2.0](LICENSE). Engine patches retain upstream attributions and Apache-2.0 terms; see [NOTICE](NOTICE) and [third-party details](THIRD_PARTY_NOTICES.md). Upstream engines, downloaded dependencies, container contents and model weights keep their own licenses. This repository does not relicense them or grant model-distribution rights.
+InfEngine is licensed under [Apache-2.0](LICENSE); upstream patches and dependencies retain their respective licenses and attributions in [NOTICE](NOTICE) and [third-party notices](THIRD_PARTY_NOTICES.md).
