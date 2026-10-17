@@ -28,7 +28,10 @@ A successful configuration API response does not answer the operational question
 
 Inference requests still go directly to vLLM or SGLang. InfEngine communicates through the supported native control integration and collects evidence outside the inference request path. An observe-only supervisor can **propose** a change for human approval. Authenticated operators can also apply policies directly, or launch an explicit evaluation. Restoration is a verified operation; it cannot undo all prior side effects.
 
-![Architecture showing inference clients accessing vLLM or SGLang directly while InfEngine performs policy validation, native control, readback and evaluation alongside the engine.](docs/assets/readme/infengine_architecture.svg)
+<picture>
+  <source media="(max-width: 600px)" srcset="docs/assets/readme/infengine_architecture_mobile.svg">
+  <img src="docs/assets/readme/infengine_architecture.svg" alt="Architecture showing inference clients accessing vLLM or SGLang directly while InfEngine performs policy validation, native control, readback and evaluation alongside the engine.">
+</picture>
 
 Policies are revision-bound and checked against native limits. vLLM applies a coordinated multi-field request; SGLang applies fields sequentially. Neither provides an engine-atomic transaction. The reconciler reports convergence or recovery outcomes, and the audit history records the actor and pre/post state.
 
@@ -42,7 +45,10 @@ We separate two questions: **Did the configuration change reach the running engi
 
 In an A100 smoke test on patched vLLM 0.28.0, we inspected the runtime concurrency limit (**64**), changed it to **16**, verified the native value, completed an inference request successfully, and restored **64**. The API-server process ID remained **3695** during the recorded sequence.
 
-![Four-stage verified live control sequence: inspect concurrency 64, apply and verify 16, serve HTTP 200, restore and verify 64.](docs/assets/readme/live_control_verification.svg)
+<picture>
+  <source media="(max-width: 600px)" srcset="docs/assets/readme/live_control_verification_mobile.svg">
+  <img src="docs/assets/readme/live_control_verification.svg" alt="Four-stage verified live control sequence: inspect concurrency 64, apply and verify 16, serve HTTP 200, restore and verify 64.">
+</picture>
 
 **What this establishes:** verified live policy change, functioning inference and restoration without restarting the identified API server. It does **not** measure a throughput gain or establish the identity of vLLM's separate EngineCore process.
 
@@ -50,7 +56,10 @@ In an A100 smoke test on patched vLLM 0.28.0, we inspected the runtime concurren
 
 We then evaluated actual scheduling behavior. In one **A100 80 GB PCIe / Qwen2.5-7B-Instruct BF16** experiment, we tested **two concurrency limits (64 and 32)** against **two per-step token budgets (8,192 and 1,024)**. Prefix caching was disabled to avoid contamination between experimental phases; each of the four combinations was measured in three interleaved blocks, with offered concurrency 96 and 60-second measurement windows. CUDA graphs remained enabled.
 
-![A100 factorial interaction: at 8192 scheduled tokens, reducing concurrency from 64 to 32 increased request throughput from 2.722 to 3.222 requests per second; at 1024 tokens, it changed little at around 2.91.](docs/assets/readme/concurrency_token_interaction.svg)
+<picture>
+  <source media="(max-width: 600px)" srcset="docs/assets/readme/concurrency_token_interaction_mobile.svg">
+  <img src="docs/assets/readme/concurrency_token_interaction.svg" alt="A100 factorial interaction: at 8192 scheduled tokens, reducing concurrency from 64 to 32 increased request throughput from 2.722 to 3.222 requests per second; at 1024 tokens, it changed little at around 2.91.">
+</picture>
 
 The concurrency effect depended on the token budget:
 
