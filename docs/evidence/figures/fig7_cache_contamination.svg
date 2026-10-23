@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="620" viewBox="0 0 1000 620" role="img">
+<title>Prefix-cache contamination across paired arms</title>
+<desc>First cache-ON pass · blue first arm / orange second arm · token hits divided by token queries</desc>
+<rect width="1000" height="620" fill="#fff"/>
+<text x="35" y="35" font-family="Arial,sans-serif" font-size="23" fill="#182c3d" text-anchor="start" font-weight="700">Prefix-cache contamination across paired arms</text>
+<text x="35" y="62" font-family="Arial,sans-serif" font-size="14" fill="#182c3d" text-anchor="start" font-weight="400">First cache-ON pass · blue first arm / orange second arm · token hits divided by token queries</text>
+<text x="70" y="120" font-family="Arial,sans-serif" font-size="15" fill="#182c3d" text-anchor="start" font-weight="700">Prefix-cache hit fraction (tokens)</text>
+<line x1="70" y1="430.0" x2="950" y2="430.0" stroke="#dce4eb" stroke-width="1"/>
+<text x="62" y="435.0" font-family="Arial,sans-serif" font-size="12" fill="#182c3d" text-anchor="end" font-weight="400">0</text>
+<line x1="70" y1="356.25" x2="950" y2="356.25" stroke="#dce4eb" stroke-width="1"/>
+<text x="62" y="361.25" font-family="Arial,sans-serif" font-size="12" fill="#182c3d" text-anchor="end" font-weight="400">0.25</text>
+<line x1="70" y1="282.5" x2="950" y2="282.5" stroke="#dce4eb" stroke-width="1"/>
+<text x="62" y="287.5" font-family="Arial,sans-serif" font-size="12" fill="#182c3d" text-anchor="end" font-weight="400">0.5</text>
+<line x1="70" y1="208.75" x2="950" y2="208.75" stroke="#dce4eb" stroke-width="1"/>
+<text x="62" y="213.75" font-family="Arial,sans-serif" font-size="12" fill="#182c3d" text-anchor="end" font-weight="400">0.75</text>
+<line x1="70" y1="135.0" x2="950" y2="135.0" stroke="#dce4eb" stroke-width="1"/>
+<text x="62" y="140.0" font-family="Arial,sans-serif" font-size="12" fill="#182c3d" text-anchor="end" font-weight="400">1</text>
+<line x1="70" y1="135" x2="70" y2="430" stroke="#182c3d" stroke-width="1"/>
+<rect x="80" y="420.7665" width="26" height="9.233499999999992" fill="#2563a6"/>
+<text x="93" y="412.7665" font-family="Arial,sans-serif" font-size="11" fill="#182c3d" text-anchor="middle" font-weight="400">0.031</text>
+<rect x="111" y="163.5265" width="26" height="266.4735" fill="#c65d24"/>
+<text x="124" y="155.5265" font-family="Arial,sans-serif" font-size="11" fill="#182c3d" text-anchor="middle" font-weight="400">0.903</text>
+<text x="108" y="453" font-family="Arial,sans-serif" font-size="12" fill="#182c3d" text-anchor="middle" font-weight="400">Pair 1</text>
+<text x="108" y="474" font-family="Arial,sans-serif" font-size="12" fill="#182c3d" text-anchor="middle" font-weight="400">A→B</text>
+<rect x="177" y="416.60699999999997" width="26" height="13.393000000000029" fill="#2563a6"/>
+<text x="190" y="408.60699999999997" font-family="Arial,sans-serif" font-size="11" fill="#182c3d" text-anchor="middle" font-weight="400">0.045</text>
+<rect x="208" y="251.879" width="26" height="178.121" fill="#c65d24"/>
+<text x="221" y="243.879" font-family="Arial,sans-serif" font-size="11" fill="#182c3d" text-anchor="middle" font-weight="400">0.604</text>
+<text x="205" y="453" font-family="Arial,sans-serif" font-size="12" fill="#182c3d" text-anchor="middle" font-weight="400">Pair 2</text>
+<text x="205" y="474" font-family="Arial,sans-serif" font-size="12" fill="#182c3d" text-anchor="middle" font-weight="400">B→A</text>
+<rect x="274" y="420.1175" width="26" height="9.882499999999993" fill="#2563a6"/>
+<text x="287" y="412.1175" font-family="Arial,sans-serif" font-size="11" fill="#182c3d" text-anchor="middle" font-weight="400">0.034</text>
+<rect x="305" y="183.91099999999997" width="26" height="246.08900000000003" fill="#c65d24"/>
+<text x="318" y="175.91099999999997" font-family="Arial,sans-serif" font-size="11" fill="#182c3d" text-anchor="middle" font-weight="400">0.834</text>
+<text x="302" y="453" font-family="Arial,sans-serif" font-size="12" fill="#182c3d" text-anchor="middle" font-weight="400">Pair 3</text>
+<text x="302" y="474" font-family="Arial,sans-serif" font-size="12" fill="#182c3d" text-anchor="middle" font-weight="400">A→B</text>
+<rect x="371" y="412.654" width="26" height="17.346000000000004" fill="#2563a6"/>
+<text x="384" y="404.654" font-family="Arial,sans-serif" font-size="11" fill="#182c3d" text-anchor="middle" font-weight="400">0.059</text>
+<rect x="402" y="279.491" width="26" height="150.50900000000001" fill="#c65d24"/>
+<text x="415" y="271.491" font-family="Arial,sans-serif" font-size="11" fill="#182c3d" text-anchor="middle" font-weight="400">0.510</text>
+<text x="399" y="453" font-family="Arial,sans-serif" font-size="12" fill="#182c3d" text-anchor="middle" font-weight="400">Pair 1</text>
+<text x="399" y="474" font-family="Arial,sans-serif" font-size="12" fill="#182c3d" text-anchor="middle" font-weight="400">A→B</text>
+<rect x="468" y="415.014" width="26" height="14.98599999999999" fill="#2563a6"/>
+<text x="481" y="407.014" font-family="Arial,sans-serif" font-size="11" fill="#182c3d" text-anchor="middle" font-weight="400">0.051</text>
+<rect x="499" y="255.00600000000003" width="26" height="174.99399999999997" fill="#c65d24"/>
+<text x="512" y="247.00600000000003" font-family="Arial,sans-serif" font-size="11" fill="#182c3d" text-anchor="middle" font-weight="400">0.593</text>
+<text x="496" y="453" font-family="Arial,sans-serif" font-size="12" fill="#182c3d" text-anchor="middle" font-weight="400">Pair 2</text>
+<text x="496" y="474" font-family="Arial,sans-serif" font-size="12" fill="#182c3d" text-anchor="middle" font-weight="400">B→A</text>
+<rect x="565" y="412.595" width="26" height="17.404999999999973" fill="#2563a6"/>
+<text x="578" y="404.595" font-family="Arial,sans-serif" font-size="11" fill="#182c3d" text-anchor="middle" font-weight="400">0.059</text>
+<rect x="596" y="278.9305" width="26" height="151.0695" fill="#c65d24"/>
+<text x="609" y="270.9305" font-family="Arial,sans-serif" font-size="11" fill="#182c3d" text-anchor="middle" font-weight="400">0.512</text>
+<text x="593" y="453" font-family="Arial,sans-serif" font-size="12" fill="#182c3d" text-anchor="middle" font-weight="400">Pair 3</text>
+<text x="593" y="474" font-family="Arial,sans-serif" font-size="12" fill="#182c3d" text-anchor="middle" font-weight="400">A→B</text>
+<rect x="662" y="412.6835" width="26" height="17.31650000000002" fill="#2563a6"/>
+<text x="675" y="404.6835" font-family="Arial,sans-serif" font-size="11" fill="#182c3d" text-anchor="middle" font-weight="400">0.059</text>
+<rect x="693" y="265.331" width="26" height="164.66899999999998" fill="#c65d24"/>
+<text x="706" y="257.331" font-family="Arial,sans-serif" font-size="11" fill="#182c3d" text-anchor="middle" font-weight="400">0.558</text>
+<text x="690" y="453" font-family="Arial,sans-serif" font-size="12" fill="#182c3d" text-anchor="middle" font-weight="400">Pair 1</text>
+<text x="690" y="474" font-family="Arial,sans-serif" font-size="12" fill="#182c3d" text-anchor="middle" font-weight="400">A→B</text>
+<rect x="759" y="412.713" width="26" height="17.286999999999978" fill="#2563a6"/>
+<text x="772" y="404.713" font-family="Arial,sans-serif" font-size="11" fill="#182c3d" text-anchor="middle" font-weight="400">0.059</text>
+<rect x="790" y="263.207" width="26" height="166.793" fill="#c65d24"/>
+<text x="803" y="255.207" font-family="Arial,sans-serif" font-size="11" fill="#182c3d" text-anchor="middle" font-weight="400">0.565</text>
+<text x="787" y="453" font-family="Arial,sans-serif" font-size="12" fill="#182c3d" text-anchor="middle" font-weight="400">Pair 2</text>
+<text x="787" y="474" font-family="Arial,sans-serif" font-size="12" fill="#182c3d" text-anchor="middle" font-weight="400">B→A</text>
+<rect x="856" y="412.7425" width="26" height="17.257499999999993" fill="#2563a6"/>
+<text x="869" y="404.7425" font-family="Arial,sans-serif" font-size="11" fill="#182c3d" text-anchor="middle" font-weight="400">0.059</text>
+<rect x="887" y="266.0685" width="26" height="163.93150000000003" fill="#c65d24"/>
+<text x="900" y="258.0685" font-family="Arial,sans-serif" font-size="11" fill="#182c3d" text-anchor="middle" font-weight="400">0.556</text>
+<text x="884" y="453" font-family="Arial,sans-serif" font-size="12" fill="#182c3d" text-anchor="middle" font-weight="400">Pair 3</text>
+<text x="884" y="474" font-family="Arial,sans-serif" font-size="12" fill="#182c3d" text-anchor="middle" font-weight="400">A→B</text>
+<text x="210" y="508" font-family="Arial,sans-serif" font-size="15" fill="#182c3d" text-anchor="middle" font-weight="700">Concurrency</text>
+<text x="501" y="508" font-family="Arial,sans-serif" font-size="15" fill="#182c3d" text-anchor="middle" font-weight="700">Scheduled tokens</text>
+<text x="792" y="508" font-family="Arial,sans-serif" font-size="15" fill="#182c3d" text-anchor="middle" font-weight="700">Long-prefill threshold</text>
+<text x="70" y="547" font-family="Arial,sans-serif" font-size="14" fill="#182c3d" text-anchor="start" font-weight="400">First arms: 0.031–0.059. Second arms: 0.510–0.903. The cache state changed with arm order.</text>
+<text x="35" y="586" font-family="Arial,sans-serif" font-size="12" fill="#182c3d" text-anchor="start" font-weight="400">Source: cache_confound.csv; checked against 18 archived before/after native counter snapshots.</text>
+<text x="35" y="605" font-family="Arial,sans-serif" font-size="12" fill="#182c3d" text-anchor="start" font-weight="400">A100 80GB PCIe · Qwen2.5-7B-Instruct BF16 · patched vLLM 0.28.0 · captured evidence</text>
+</svg>

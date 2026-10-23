@@ -1,0 +1,13 @@
+flowchart TB
+  A[InfEngine SGLang adapter] --> P[POST set_internal_state with server_args]
+  P --> T[TokenizerManager]
+  T --> Z[Existing ZMQ transport]
+  Z --> S[Scheduler runtime controls]
+  S --> R[GET server_info: live internal_states]
+  R --> A
+  A --> L[Runtime-client load read: get_load]
+  N[Normalized telemetry collector] --> V[v1/loads with Prometheus format]
+  N --> M[Native metrics endpoint]
+  S --> L
+  S --> V
+  S --> M

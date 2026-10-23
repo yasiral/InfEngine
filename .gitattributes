@@ -1,2 +1,3 @@
 *.patch text eol=lf
 Dockerfile* text eol=lf
+docs/evidence/** -text

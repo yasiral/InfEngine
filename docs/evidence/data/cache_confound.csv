@@ -1,0 +1,10 @@
+experiment,pair,order,first_arm_cache_frac,second_arm_cache_frac
+runtime_concurrency_cacheON,1,A->B,0.0313,0.9033
+runtime_concurrency_cacheON,2,B->A,0.0454,0.6038
+runtime_concurrency_cacheON,3,A->B,0.0335,0.8342
+runtime_max_scheduled_tokens_cacheON,1,A->B,0.0588,0.5102
+runtime_max_scheduled_tokens_cacheON,2,B->A,0.0508,0.5932
+runtime_max_scheduled_tokens_cacheON,3,A->B,0.059,0.5121
+long_prefill_token_threshold_cacheON,1,A->B,0.0587,0.5582
+long_prefill_token_threshold_cacheON,2,B->A,0.0586,0.5654
+long_prefill_token_threshold_cacheON,3,A->B,0.0585,0.5557

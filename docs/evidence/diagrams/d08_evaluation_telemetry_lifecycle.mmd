@@ -1,0 +1,13 @@
+flowchart TB
+  V[vLLM native metrics] --> C[Out-of-band collectors]
+  S[SGLang metrics and v1/loads] --> C
+  C --> Q[Values, units, source and quality]
+  Q --> E[Contiguous counter epoch and rolling windows]
+  E --> N[Normalized snapshot]
+  N --> O[Read-only load sweep and supervisor evidence]
+  N --> X[Explicit policy evaluator measurements]
+  X --> A[Apply verified baseline or candidate]
+  A --> W[Warmup and bounded measurement]
+  W --> R[Report outcomes and availability]
+  R --> F[Finally attempt original desired-state restore]
+  F --> H[Human interpretation; no automatic winner]

@@ -1,0 +1,1067 @@
+{
+  "assumptions": {
+    "histogram_boundaries": "native cumulative/rolling metrics are not fully isolated to a single load level; see per-run evidence_windows",
+    "latency_distributions": "only p50/p95/p99 quantiles are collected; raw histogram bucket distributions are not preserved",
+    "runtime_policy_mutation": "none by the sweep",
+    "runtime_policy_stability": "stable",
+    "sole_traffic": "detection heuristic only (environment.sole_traffic_invariant per run); external traffic is not proven absent"
+  },
+  "generated_at": "2026-10-02T21:13:42.280394+00:00",
+  "limitations": [
+    "the sweep verdict is INCONCLUSIVE: saturation is not demonstrated (see summary.caveats)"
+  ],
+  "model": "Qwen/Qwen2.5-7B-Instruct",
+  "runtime_config": {
+    "changed": false,
+    "note": "read-only /runtime/config readbacks at level boundaries; the sweep never mutates policy",
+    "readbacks": [
+      {
+        "at": "start",
+        "config": {
+          "desired": {
+            "long_prefill_token_threshold": 0,
+            "runtime_max_running_seqs": 16,
+            "runtime_max_scheduled_tokens": 8192
+          },
+          "desired_revision": 55,
+          "identity": {
+            "api_pid": 17365,
+            "base_url": "http://127.0.0.1:9001",
+            "engine": "vllm",
+            "engine_instance_id": "vllm:http://127.0.0.1:9001",
+            "version": "0.28.0"
+          },
+          "observed": {
+            "long_prefill_token_threshold": 0,
+            "reset_prefix_cache": 0,
+            "runtime_kv_watermark": 0.0,
+            "runtime_max_running_seqs": 16,
+            "runtime_max_scheduled_tokens": 8192,
+            "runtime_reserve_full_isl": true
+          },
+          "status": "CONVERGED"
+        }
+      },
+      {
+        "at": "after_level_0",
+        "config": {
+          "desired": {
+            "long_prefill_token_threshold": 0,
+            "runtime_max_running_seqs": 16,
+            "runtime_max_scheduled_tokens": 8192
+          },
+          "desired_revision": 55,
+          "identity": {
+            "api_pid": 17365,
+            "base_url": "http://127.0.0.1:9001",
+            "engine": "vllm",
+            "engine_instance_id": "vllm:http://127.0.0.1:9001",
+            "version": "0.28.0"
+          },
+          "observed": {
+            "long_prefill_token_threshold": 0,
+            "reset_prefix_cache": 0,
+            "runtime_kv_watermark": 0.0,
+            "runtime_max_running_seqs": 16,
+            "runtime_max_scheduled_tokens": 8192,
+            "runtime_reserve_full_isl": true
+          },
+          "status": "CONVERGED"
+        }
+      }
+    ],
+    "source": "http://127.0.0.1:18001",
+    "verified": true
+  },
+  "schema": "infengine.load_sweep/1",
+  "sweep": {
+    "levels": [
+      16.0
+    ],
+    "load_model": "closed_loop",
+    "measurement": {
+      "min_polls": 3,
+      "min_requests": 8,
+      "poll_interval_s": 1.0,
+      "stale_fraction_max": 0.5,
+      "window_s": 5.0
+    },
+    "repeats": 1,
+    "runtime_policy_mutation": "none",
+    "runtime_policy_stability": "stable",
+    "workload": {
+      "drain_budget_s": 10.0,
+      "max_new_tokens": 64,
+      "prompt_tokens": 2048,
+      "seed": 257,
+      "temperature": 0.0,
+      "timeout_s": 60.0,
+      "top_p": 1.0,
+      "warmup_requests": 8
+    }
+  },
+  "levels": [
+    {
+      "aggregate": {
+        "e2e_p95_s": {
+          "adequate": true,
+          "dominant_quality": "fresh",
+          "max": 7.999999999999998,
+          "median": 7.999999999999998,
+          "min": 7.999999999999998,
+          "polls_usable": 23,
+          "runs": 1,
+          "sample_count": 95
+        },
+        "kv_usage": {
+          "adequate": true,
+          "dominant_quality": "fresh",
+          "max": 0.040367253251721524,
+          "median": 0.040367253251721524,
+          "min": 0.040367253251721524,
+          "polls_usable": 23,
+          "runs": 1,
+          "sample_count": 95
+        },
+        "output_tokens_per_s": {
+          "adequate": true,
+          "dominant_quality": "fresh",
+          "max": 205.1355467514853,
+          "median": 205.1355467514853,
+          "min": 205.1355467514853,
+          "polls_usable": null,
+          "runs": 1,
+          "sample_count": 6156
+        },
+        "queue_time_p95_s": {
+          "adequate": true,
+          "dominant_quality": "fresh",
+          "max": 0.3,
+          "median": 0.3,
+          "min": 0.3,
+          "polls_usable": 23,
+          "runs": 1,
+          "sample_count": 95
+        },
+        "requests_running": {
+          "adequate": true,
+          "dominant_quality": "fresh",
+          "max": 12.0,
+          "median": 12.0,
+          "min": 12.0,
+          "polls_usable": 23,
+          "runs": 1,
+          "sample_count": 95
+        },
+        "requests_waiting": {
+          "adequate": true,
+          "dominant_quality": "fresh",
+          "max": 0.0,
+          "median": 0.0,
+          "min": 0.0,
+          "polls_usable": 23,
+          "runs": 1,
+          "sample_count": 95
+        },
+        "throughput": {
+          "adequate": true,
+          "dominant_quality": "fresh",
+          "max": 210.66076365038165,
+          "median": 210.66076365038165,
+          "min": 210.66076365038165,
+          "polls_usable": 23,
+          "runs": 1,
+          "sample_count": 95
+        },
+        "throughput_req_s": {
+          "adequate": true,
+          "dominant_quality": "fresh",
+          "max": 3.1581846335750896,
+          "median": 3.1581846335750896,
+          "min": 3.1581846335750896,
+          "polls_usable": 95,
+          "runs": 1,
+          "sample_count": 95
+        },
+        "ttft_p95_s": {
+          "adequate": true,
+          "dominant_quality": "fresh",
+          "max": 2.4076923076923076,
+          "median": 2.4076923076923076,
+          "min": 2.4076923076923076,
+          "polls_usable": 23,
+          "runs": 1,
+          "sample_count": 95
+        }
+      },
+      "limitations": [],
+      "offered": {
+        "concurrency": 16
+      },
+      "offered_load": 16.0,
+      "runs": [
+        {
+          "counter_deltas": {
+            "generation_tokens": {
+              "from": 517824.0,
+              "to": 523980.0,
+              "value": 6156.0
+            },
+            "generation_tokens_total": {
+              "reason": "unavailable",
+              "value": null
+            },
+            "num_preemptions": {
+              "from": 0.0,
+              "to": 0.0,
+              "value": 0.0
+            },
+            "num_retracted_requests_total": {
+              "reason": "unavailable",
+              "value": null
+            },
+            "prompt_tokens": {
+              "from": 9586005.0,
+              "to": 9943130.0,
+              "value": 357125.0
+            },
+            "prompt_tokens_total": {
+              "reason": "unavailable",
+              "value": null
+            }
+          },
+          "counts": {
+            "completed": 95,
+            "drained": 16,
+            "error": 0,
+            "in_flight": 0,
+            "incomplete": 0,
+            "started": 111,
+            "timeout": 0
+          },
+          "evidence_windows": {
+            "counter_deltas": "cumulative counters delta'd from the post-warmup poll to the final poll (warmup and drain excluded)",
+            "execution_evidence": "native request-histogram delta over the per-run collector rolling window (window_s=5.0) ending at the final poll; the cumulative baseline is taken post-warmup, so warmup observations are excluded",
+            "final_poll": "the final measurement poll occurs BEFORE phase-end drain begins, so drain completions are not in the histograms or counters; it can include a few milliseconds of post-t1 measurement traffic",
+            "normalized_metrics": "median over telemetry polls in [t_start + window_s, t_end] (measurement ramp-in excluded)",
+            "note": "Cumulative/rolling native metrics are NOT fully isolated to a single load level; the intervals above are the actual observation windows.",
+            "output_tokens_per_s": "generation-token counter delta over [post-warmup poll, final poll] (~30.009s) / that window; warmup and post-measurement drain excluded",
+            "throughput_req_s": "measurement-period completions / actual measurement span; post-measurement drain excluded"
+          },
+          "execution_evidence": {
+            "collected_at": "2026-10-02T21:14:17.499573+00:00",
+            "engine": "vllm",
+            "engine_level": {
+              "iteration_tokens_p95": {
+                "boundary_note": "windowed p95 tokens per scheduling step (batch-size proxy).",
+                "classification": "DERIVED_ESTIMATE",
+                "engine": "vllm",
+                "engine_version": "v0.28.0",
+                "key": "iteration_tokens_p95",
+                "quality": "fresh",
+                "quantiles": {},
+                "sample_count": null,
+                "scope": "engine_level",
+                "source": "vllm:iteration_tokens_total",
+                "unit": "tokens/step",
+                "value": 5973.333333333333,
+                "window_s": 5.0
+              },
+              "kv_usage": {
+                "boundary_note": "KV pool utilization (normalized gauge).",
+                "classification": "MEASURED",
+                "engine": "vllm",
+                "engine_version": "v0.28.0",
+                "key": "kv_usage",
+                "quality": "fresh",
+                "quantiles": {},
+                "sample_count": null,
+                "scope": "engine_level",
+                "source": "kv_cache_usage_perc / token_usage",
+                "unit": "ratio",
+                "value": 0.040045906656465236,
+                "window_s": 5.0
+              },
+              "num_preemptions": {
+                "boundary_note": "cumulative preemptions (counter).",
+                "classification": "MEASURED",
+                "engine": "vllm",
+                "engine_version": "v0.28.0",
+                "key": "num_preemptions",
+                "quality": "fresh",
+                "quantiles": {},
+                "sample_count": null,
+                "scope": "engine_level",
+                "source": "vllm:num_preemptions",
+                "unit": "count",
+                "value": 0.0,
+                "window_s": 5.0
+              },
+              "request_success": {
+                "boundary_note": "cumulative successful requests by finished_reason.",
+                "classification": "MEASURED",
+                "engine": "vllm",
+                "engine_version": "v0.28.0",
+                "key": "request_success",
+                "quality": "fresh",
+                "quantiles": {},
+                "sample_count": null,
+                "scope": "engine_level",
+                "source": "vllm:request_success",
+                "unit": "count",
+                "value": 3594.0,
+                "window_s": 5.0
+              },
+              "requests_running": {
+                "boundary_note": "running requests (normalized gauge).",
+                "classification": "MEASURED",
+                "engine": "vllm",
+                "engine_version": "v0.28.0",
+                "key": "requests_running",
+                "quality": "fresh",
+                "quantiles": {},
+                "sample_count": null,
+                "scope": "engine_level",
+                "source": "num_requests_running",
+                "unit": "count",
+                "value": 12.0,
+                "window_s": 5.0
+              },
+              "requests_waiting": {
+                "boundary_note": "waiting requests (normalized gauge).",
+                "classification": "MEASURED",
+                "engine": "vllm",
+                "engine_version": "v0.28.0",
+                "key": "requests_waiting",
+                "quality": "fresh",
+                "quantiles": {},
+                "sample_count": null,
+                "scope": "engine_level",
+                "source": "num_requests_waiting",
+                "unit": "count",
+                "value": 0.0,
+                "window_s": 5.0
+              }
+            },
+            "engine_version": "v0.28.0",
+            "instance_id": "vllm:http://127.0.0.1:8000",
+            "request_stage": {
+              "decode_time": {
+                "boundary_note": "first NEW_TOKEN -> last NEW_TOKEN; includes decode preemptions.",
+                "classification": "MEASURED",
+                "engine": "vllm",
+                "engine_version": "v0.28.0",
+                "key": "decode_time",
+                "quality": "fresh",
+                "quantiles": {
+                  "p50": 3.75,
+                  "p95": 4.875,
+                  "p99": 4.975
+                },
+                "sample_count": 14,
+                "scope": "request_scoped_aggregated",
+                "source": "vllm:request_decode_time_seconds",
+                "unit": "seconds",
+                "value": null,
+                "window_s": 5.0
+              },
+              "e2e": {
+                "boundary_note": "arrival -> finished (frontend wall-clock).",
+                "classification": "MEASURED",
+                "engine": "vllm",
+                "engine_version": "v0.28.0",
+                "key": "e2e",
+                "quality": "fresh",
+                "quantiles": {
+                  "p50": 3.75,
+                  "p95": 4.875,
+                  "p99": 4.975
+                },
+                "sample_count": 14,
+                "scope": "request_scoped_aggregated",
+                "source": "vllm:e2e_request_latency_seconds",
+                "unit": "seconds",
+                "value": null,
+                "window_s": 5.0
+              },
+              "inference_time": {
+                "boundary_note": "first SCHEDULED -> last NEW_TOKEN.",
+                "classification": "MEASURED",
+                "engine": "vllm",
+                "engine_version": "v0.28.0",
+                "key": "inference_time",
+                "quality": "fresh",
+                "quantiles": {
+                  "p50": 3.75,
+                  "p95": 4.875,
+                  "p99": 4.975
+                },
+                "sample_count": 14,
+                "scope": "request_scoped_aggregated",
+                "source": "vllm:request_inference_time_seconds",
+                "unit": "seconds",
+                "value": null,
+                "window_s": 5.0
+              },
+              "inter_token_latency": {
+                "boundary_note": "per engine step: consecutive decode output iteration delta; one sample per step (not per token).",
+                "classification": "MEASURED",
+                "engine": "vllm",
+                "engine_version": "v0.28.0",
+                "key": "inter_token_latency",
+                "quality": "fresh",
+                "quantiles": {
+                  "p50": 0.01824339207048458,
+                  "p95": 0.42203124999999986,
+                  "p99": 0.48440625
+                },
+                "sample_count": 998,
+                "scope": "request_scoped_aggregated",
+                "source": "vllm:inter_token_latency_seconds",
+                "unit": "seconds",
+                "value": null,
+                "window_s": 5.0
+              },
+              "iteration_tokens_p95": {
+                "boundary_note": "windowed p95 tokens per scheduling step (batch-size proxy).",
+                "classification": "DERIVED_ESTIMATE",
+                "engine": "vllm",
+                "engine_version": "v0.28.0",
+                "key": "iteration_tokens_p95",
+                "quality": "fresh",
+                "quantiles": {},
+                "sample_count": null,
+                "scope": "engine_level",
+                "source": "vllm:iteration_tokens_total",
+                "unit": "tokens/step",
+                "value": 5973.333333333333,
+                "window_s": 5.0
+              },
+              "num_preemptions": {
+                "boundary_note": "cumulative preemptions (counter).",
+                "classification": "MEASURED",
+                "engine": "vllm",
+                "engine_version": "v0.28.0",
+                "key": "num_preemptions",
+                "quality": "fresh",
+                "quantiles": {},
+                "sample_count": null,
+                "scope": "engine_level",
+                "source": "vllm:num_preemptions",
+                "unit": "count",
+                "value": 0.0,
+                "window_s": 5.0
+              },
+              "prefill_time": {
+                "boundary_note": "first SCHEDULED -> first NEW_TOKEN; includes prefill preemptions.",
+                "classification": "MEASURED",
+                "engine": "vllm",
+                "engine_version": "v0.28.0",
+                "key": "prefill_time",
+                "quality": "fresh",
+                "quantiles": {
+                  "p50": 0.86,
+                  "p95": 0.986,
+                  "p99": 0.9972
+                },
+                "sample_count": 14,
+                "scope": "request_scoped_aggregated",
+                "source": "vllm:request_prefill_time_seconds",
+                "unit": "seconds",
+                "value": null,
+                "window_s": 5.0
+              },
+              "queue_time": {
+                "boundary_note": "first QUEUED -> first SCHEDULED (engine-core clock).",
+                "classification": "MEASURED",
+                "engine": "vllm",
+                "engine_version": "v0.28.0",
+                "key": "queue_time",
+                "quality": "fresh",
+                "quantiles": {
+                  "p50": 0.3,
+                  "p95": 0.3,
+                  "p99": 0.3
+                },
+                "sample_count": 14,
+                "scope": "request_scoped_aggregated",
+                "source": "vllm:request_queue_time_seconds",
+                "unit": "seconds",
+                "value": null,
+                "window_s": 5.0
+              },
+              "request_generation_tokens": {
+                "boundary_note": "per-request generation-token count distribution.",
+                "classification": "MEASURED",
+                "engine": "vllm",
+                "engine_version": "v0.28.0",
+                "key": "request_generation_tokens",
+                "quality": "fresh",
+                "quantiles": {
+                  "p50": 75.0,
+                  "p95": 97.5,
+                  "p99": 99.5
+                },
+                "sample_count": 14,
+                "scope": "request_scoped_aggregated",
+                "source": "vllm:request_generation_tokens",
+                "unit": "tokens",
+                "value": null,
+                "window_s": 5.0
+              },
+              "request_prompt_tokens": {
+                "boundary_note": "per-request prompt-token count distribution.",
+                "classification": "MEASURED",
+                "engine": "vllm",
+                "engine_version": "v0.28.0",
+                "key": "request_prompt_tokens",
+                "quality": "fresh",
+                "quantiles": {
+                  "p50": 3500.0,
+                  "p95": 4850.0,
+                  "p99": 4970.0
+                },
+                "sample_count": 14,
+                "scope": "request_scoped_aggregated",
+                "source": "vllm:request_prompt_tokens",
+                "unit": "tokens",
+                "value": null,
+                "window_s": 5.0
+              },
+              "request_success": {
+                "boundary_note": "cumulative successful requests by finished_reason.",
+                "classification": "MEASURED",
+                "engine": "vllm",
+                "engine_version": "v0.28.0",
+                "key": "request_success",
+                "quality": "fresh",
+                "quantiles": {},
+                "sample_count": null,
+                "scope": "engine_level",
+                "source": "vllm:request_success",
+                "unit": "count",
+                "value": 3594.0,
+                "window_s": 5.0
+              },
+              "time_per_output_token": {
+                "boundary_note": "per finished request: decode_time / (output_tokens - 1).",
+                "classification": "MEASURED",
+                "engine": "vllm",
+                "engine_version": "v0.28.0",
+                "key": "time_per_output_token",
+                "quality": "fresh",
+                "quantiles": {
+                  "p50": 0.0625,
+                  "p95": 0.07375,
+                  "p99": 0.07475
+                },
+                "sample_count": 14,
+                "scope": "request_scoped_aggregated",
+                "source": "vllm:request_time_per_output_token_seconds",
+                "unit": "seconds",
+                "value": null,
+                "window_s": 5.0
+              },
+              "tpot": {
+                "boundary_note": "LEGACY engine-dependent alias; see inter_token_latency.",
+                "classification": "MEASURED",
+                "engine": "vllm",
+                "engine_version": "v0.28.0",
+                "key": "tpot",
+                "quality": "fresh",
+                "quantiles": {
+                  "p50": 0.01824339207048458,
+                  "p95": 0.42203124999999986,
+                  "p99": 0.48440625
+                },
+                "sample_count": 998,
+                "scope": "request_scoped_aggregated",
+                "source": "vllm:inter_token_latency_seconds",
+                "unit": "seconds",
+                "value": null,
+                "window_s": 5.0
+              },
+              "ttft": {
+                "boundary_note": "arrival -> first token (frontend wall-clock).",
+                "classification": "MEASURED",
+                "engine": "vllm",
+                "engine_version": "v0.28.0",
+                "key": "ttft",
+                "quality": "fresh",
+                "quantiles": {
+                  "p50": 1.5454545454545454,
+                  "p95": 2.4045454545454543,
+                  "p99": 2.4809090909090905
+                },
+                "sample_count": 14,
+                "scope": "request_scoped_aggregated",
+                "source": "vllm:time_to_first_token_seconds",
+                "unit": "seconds",
+                "value": null,
+                "window_s": 5.0
+              }
+            },
+            "window_s": 5.0
+          },
+          "failure_reason": null,
+          "finished_at": "2026-10-02T21:14:19.822634+00:00",
+          "histograms": {
+            "families": {
+              "decode_time": {
+                "available": true,
+                "boundary_note": "first NEW_TOKEN -> last NEW_TOKEN; includes decode preemptions.",
+                "classification": "MEASURED",
+                "counts": [
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  14,
+                  14,
+                  14,
+                  14,
+                  14,
+                  14,
+                  14,
+                  14,
+                  14,
+                  14,
+                  14,
+                  14,
+                  14,
+                  14,
+                  14
+                ],
+                "key": "decode_time",
+                "label": "Decode (measured)",
+                "le": [
+                  0.3,
+                  0.5,
+                  0.8,
+                  1.0,
+                  1.5,
+                  2.0,
+                  2.5,
+                  5.0,
+                  10.0,
+                  15.0,
+                  20.0,
+                  30.0,
+                  40.0,
+                  50.0,
+                  60.0,
+                  120.0,
+                  240.0,
+                  480.0,
+                  960.0,
+                  1920.0,
+                  7680.0,
+                  "+Inf"
+                ],
+                "low_sample": false,
+                "reason": null,
+                "scope": "request_scoped_aggregated",
+                "source": "vllm:request_decode_time_seconds",
+                "total": 14,
+                "unit": "seconds",
+                "window_s": 5.0,
+                "zero_observations": false
+              },
+              "e2e": {
+                "available": true,
+                "boundary_note": "arrival -> finished (frontend wall-clock).",
+                "classification": "MEASURED",
+                "counts": [
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  14,
+                  14,
+                  14,
+                  14,
+                  14,
+                  14,
+                  14,
+                  14,
+                  14,
+                  14,
+                  14,
+                  14,
+                  14,
+                  14,
+                  14
+                ],
+                "key": "e2e",
+                "label": "End-to-end",
+                "le": [
+                  0.3,
+                  0.5,
+                  0.8,
+                  1.0,
+                  1.5,
+                  2.0,
+                  2.5,
+                  5.0,
+                  10.0,
+                  15.0,
+                  20.0,
+                  30.0,
+                  40.0,
+                  50.0,
+                  60.0,
+                  120.0,
+                  240.0,
+                  480.0,
+                  960.0,
+                  1920.0,
+                  7680.0,
+                  "+Inf"
+                ],
+                "low_sample": false,
+                "reason": null,
+                "scope": "request_scoped_aggregated",
+                "source": "vllm:e2e_request_latency_seconds",
+                "total": 14,
+                "unit": "seconds",
+                "window_s": 5.0,
+                "zero_observations": false
+              },
+              "prefill_time": {
+                "available": true,
+                "boundary_note": "first SCHEDULED -> first NEW_TOKEN; includes prefill preemptions.",
+                "classification": "MEASURED",
+                "counts": [
+                  1,
+                  1,
+                  4,
+                  14,
+                  14,
+                  14,
+                  14,
+                  14,
+                  14,
+                  14,
+                  14,
+                  14,
+                  14,
+                  14,
+                  14,
+                  14,
+                  14,
+                  14,
+                  14,
+                  14,
+                  14,
+                  14
+                ],
+                "key": "prefill_time",
+                "label": "Prefill (measured)",
+                "le": [
+                  0.3,
+                  0.5,
+                  0.8,
+                  1.0,
+                  1.5,
+                  2.0,
+                  2.5,
+                  5.0,
+                  10.0,
+                  15.0,
+                  20.0,
+                  30.0,
+                  40.0,
+                  50.0,
+                  60.0,
+                  120.0,
+                  240.0,
+                  480.0,
+                  960.0,
+                  1920.0,
+                  7680.0,
+                  "+Inf"
+                ],
+                "low_sample": false,
+                "reason": null,
+                "scope": "request_scoped_aggregated",
+                "source": "vllm:request_prefill_time_seconds",
+                "total": 14,
+                "unit": "seconds",
+                "window_s": 5.0,
+                "zero_observations": false
+              },
+              "queue_time": {
+                "available": true,
+                "boundary_note": "first QUEUED -> first SCHEDULED (engine-core clock).",
+                "classification": "MEASURED",
+                "counts": [
+                  14,
+                  14,
+                  14,
+                  14,
+                  14,
+                  14,
+                  14,
+                  14,
+                  14,
+                  14,
+                  14,
+                  14,
+                  14,
+                  14,
+                  14,
+                  14,
+                  14,
+                  14,
+                  14,
+                  14,
+                  14,
+                  14
+                ],
+                "key": "queue_time",
+                "label": "Queue latency",
+                "le": [
+                  0.3,
+                  0.5,
+                  0.8,
+                  1.0,
+                  1.5,
+                  2.0,
+                  2.5,
+                  5.0,
+                  10.0,
+                  15.0,
+                  20.0,
+                  30.0,
+                  40.0,
+                  50.0,
+                  60.0,
+                  120.0,
+                  240.0,
+                  480.0,
+                  960.0,
+                  1920.0,
+                  7680.0,
+                  "+Inf"
+                ],
+                "low_sample": false,
+                "reason": null,
+                "scope": "request_scoped_aggregated",
+                "source": "vllm:request_queue_time_seconds",
+                "total": 14,
+                "unit": "seconds",
+                "window_s": 5.0,
+                "zero_observations": false
+              },
+              "ttft": {
+                "available": true,
+                "boundary_note": "arrival -> first token (frontend wall-clock).",
+                "classification": "MEASURED",
+                "counts": [
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  1,
+                  1,
+                  3,
+                  14,
+                  14,
+                  14,
+                  14,
+                  14,
+                  14,
+                  14,
+                  14,
+                  14,
+                  14,
+                  14
+                ],
+                "key": "ttft",
+                "label": "TTFT",
+                "le": [
+                  0.001,
+                  0.005,
+                  0.01,
+                  0.02,
+                  0.04,
+                  0.06,
+                  0.08,
+                  0.1,
+                  0.25,
+                  0.5,
+                  0.75,
+                  1.0,
+                  2.5,
+                  5.0,
+                  7.5,
+                  10.0,
+                  20.0,
+                  40.0,
+                  80.0,
+                  160.0,
+                  640.0,
+                  2560.0,
+                  "+Inf"
+                ],
+                "low_sample": false,
+                "reason": null,
+                "scope": "request_scoped_aggregated",
+                "source": "vllm:time_to_first_token_seconds",
+                "total": 14,
+                "unit": "seconds",
+                "window_s": 5.0,
+                "zero_observations": false
+              }
+            }
+          },
+          "measurement_window_s": 30.0094,
+          "metrics": {
+            "e2e_p50_s": {
+              "dominant_quality": "fresh",
+              "polls_usable": 23,
+              "sample_count": 95,
+              "spread": [
+                3.75,
+                5.0
+              ],
+              "stale_fraction": 0.0,
+              "value": 3.9285714285714284
+            },
+            "e2e_p95_s": {
+              "dominant_quality": "fresh",
+              "polls_usable": 23,
+              "sample_count": 95,
+              "spread": [
+                4.875,
+                9.5
+              ],
+              "stale_fraction": 0.0,
+              "value": 7.999999999999998
+            },
+            "kv_usage": {
+              "dominant_quality": "fresh",
+              "polls_usable": 23,
+              "sample_count": 95,
+              "spread": [
+                0.03559296097934206,
+                0.053771996939556255
+              ],
+              "stale_fraction": 0.0,
+              "value": 0.040367253251721524
+            },
+            "output_tokens_per_s": {
+              "boundary": "generation-token counter delta over [post-warmup poll, final poll] divided by that window's duration; warmup and post-measurement drain are excluded",
+              "counter": "generation_tokens",
+              "counter_delta": 6156.0,
+              "dominant_quality": "fresh",
+              "polls_usable": null,
+              "reason": null,
+              "sample_count": 6156,
+              "stale_fraction": 0.0,
+              "value": 205.1355467514853,
+              "window_s": 30.0094
+            },
+            "queue_time_p95_s": {
+              "dominant_quality": "fresh",
+              "polls_usable": 23,
+              "sample_count": 95,
+              "spread": [
+                0.3,
+                2.375
+              ],
+              "stale_fraction": 0.0,
+              "value": 0.3
+            },
+            "requests_running": {
+              "dominant_quality": "fresh",
+              "polls_usable": 23,
+              "sample_count": 95,
+              "spread": [
+                11,
+                16
+              ],
+              "stale_fraction": 0.0,
+              "value": 12
+            },
+            "requests_waiting": {
+              "dominant_quality": "fresh",
+              "polls_usable": 23,
+              "sample_count": 95,
+              "spread": [
+                0,
+                0
+              ],
+              "stale_fraction": 0.0,
+              "value": 0
+            },
+            "throughput": {
+              "dominant_quality": "fresh",
+              "polls_usable": 23,
+              "sample_count": 95,
+              "spread": null,
+              "stale_fraction": 0.0,
+              "value": 210.66076365038165
+            },
+            "throughput_req_s": {
+              "dominant_quality": "fresh",
+              "duration_s": 30.0806,
+              "polls_usable": 95,
+              "sample_count": 95,
+              "spread": null,
+              "stale_fraction": 0.0,
+              "value": 3.1581846335750896
+            },
+            "ttft_p95_s": {
+              "dominant_quality": "fresh",
+              "polls_usable": 23,
+              "sample_count": 95,
+              "spread": [
+                2.4045454545454543,
+                4.6875
+              ],
+              "stale_fraction": 0.0,
+              "value": 2.4076923076923076
+            }
+          },
+          "offered_load": 16.0,
+          "ok": true,
+          "run_index": 0,
+          "started_at": "2026-10-02T21:13:42.326709+00:00",
+          "wall_s": 30.0,
+          "warmup_ok": true,
+          "snapshot": {
+            "normalized": {
+              "e2e_p50_s": 3.75,
+              "e2e_p95_s": 4.875,
+              "e2e_p99_s": 4.975,
+              "kv_usage": 0.040045906656465236,
+              "queue_time_p50_s": 0.3,
+              "queue_time_p95_s": 0.3,
+              "queue_time_p99_s": 0.3,
+              "requests_running": 12,
+              "requests_waiting": 0,
+              "tpot_p50_s": 0.01824339207048458,
+              "tpot_p95_s": 0.42203124999999986,
+              "tpot_p99_s": 0.48440625,
+              "ttft_p50_s": 1.5454545454545454,
+              "ttft_p95_s": 2.4045454545454543,
+              "ttft_p99_s": 2.4809090909090905
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -211,3 +211,9 @@ Explore the [reconciler](src/infengine/control/), [engine integrations](contrib/
 ## License
 
 InfEngine is licensed under [Apache-2.0](LICENSE); upstream patches and dependencies retain their respective licenses and attributions in [NOTICE](NOTICE) and [third-party notices](THIRD_PARTY_NOTICES.md).
+
+## Experimental evidence
+
+The measurements behind the case study are now available [in this repository](docs/evidence/README.md): **eight experimental figures, ten architecture diagrams, nine publication datasets**, compact measurement captures and offline analysis scripts. Start with the [figure gallery](docs/evidence/FIGURE_MANIFEST.md), [reviewed evidence ledger](docs/evidence/EVIDENCE_LEDGER.md) or [reproduction instructions](docs/evidence/REPRODUCE.md).
+
+The [evidence-v1 release](https://github.com/yasiral/InfEngine/releases/tag/evidence-v1) also includes a fuller sanitized measurement archive with SHA-256 checksums. This is historical A100/vLLM evidence, with workload and telemetry limitations recorded explicitly. Original data is preserved; [paired A/B ratio corrections](docs/evidence/support/ab-ratio-reconciliation.json) are published separately. Offline analysis needs only Python 3.11 and does not run a GPU workload.

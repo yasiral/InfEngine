@@ -1,0 +1,13 @@
+flowchart TB
+  C[InfEngine vLLM HTTP adapter] --> L[Authenticated control listener]
+  subgraph API[vLLM API-server]
+    L --> U[AsyncLLM and EngineCoreClient utility call]
+    I[Existing inference HTTP endpoint]
+  end
+  U --> E[Existing EngineCore process]
+  I --> E
+  E --> S[Scheduler runtime fields and KV admission]
+  S --> R[Native config and provisioned-limit readback]
+  R --> U
+  U --> C
+  style API fill:#f3f7f9,stroke:#748895,color:#182c3d

@@ -1,0 +1,15 @@
+{
+  "source": "Native Prometheus prefix-cache token counters; labels omitted.",
+  "before": {
+    "vllm:external_prefix_cache_hits_total": 0.0,
+    "vllm:external_prefix_cache_queries_total": 0.0,
+    "vllm:prefix_cache_hits_total": 6443328.0,
+    "vllm:prefix_cache_queries_total": 9191433.0
+  },
+  "after": {
+    "vllm:external_prefix_cache_hits_total": 0.0,
+    "vllm:external_prefix_cache_queries_total": 0.0,
+    "vllm:prefix_cache_hits_total": 6471040.0,
+    "vllm:prefix_cache_queries_total": 9663119.0
+  }
+}

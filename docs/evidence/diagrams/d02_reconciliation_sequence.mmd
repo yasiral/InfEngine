@@ -1,0 +1,23 @@
+sequenceDiagram
+  actor O as Operator
+  participant S as Service
+  participant R as Reconciler
+  participant D as StateStore
+  participant A as Adapter
+  participant E as Engine
+  O->>S: Policy plus expected revision
+  S->>R: Conditional reconciliation
+  R->>D: Check revision under mutation lock
+  R->>A: Read native state and validate all controls
+  A->>E: Native readback
+  alt Invalid policy or revision conflict
+    R-->>S: Reject with no accepted mutation
+  else Valid plan
+    R->>D: Persist accepted desired state and revision
+    R->>A: Execute planned transitions
+    A->>E: Native mutation
+    R->>A: Verify resulting native state
+    R-->>S: Converged, blocked or failed
+  end
+  S->>S: Record audit outcome
+  S-->>O: Desired, observed and transition result

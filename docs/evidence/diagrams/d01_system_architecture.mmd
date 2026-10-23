@@ -1,0 +1,19 @@
+flowchart TB
+  O[Operator CLI or service client] --> S[Control-plane service and audit]
+  S --> D[DesiredState and StateStore]
+  S --> R[Reconciler and transition plan]
+  D --> R
+  R --> A[Selected engine adapter]
+  A --> V[vLLM native control hook]
+  A --> G[SGLang internal-state RPC]
+  A --> B[Built-in reference engine]
+  I[Inference client] --> E[Engine inference endpoint]
+  V --> E
+  G --> E
+  T[Out-of-band native telemetry] --> N[Quality-aware normalized snapshot]
+  E --> T
+  N --> U[Observe-only supervisor]
+  U --> H[Human approval and revalidation]
+  H --> S
+  X[Explicitly invoked evaluator] --> S
+  N --> X

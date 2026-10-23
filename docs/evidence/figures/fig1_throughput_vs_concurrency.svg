@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="560" viewBox="0 0 1000 560" role="img">
+<title>Pilot request throughput across offered concurrency</title>
+<desc>Prefix cache ON · CUDA graphs ON · two repeats per offered load · 15 s measurement</desc>
+<rect width="1000" height="560" fill="#fff"/>
+<text x="35" y="35" font-family="Arial,sans-serif" font-size="23" fill="#182c3d" text-anchor="start" font-weight="700">Pilot request throughput across offered concurrency</text>
+<text x="35" y="62" font-family="Arial,sans-serif" font-size="14" fill="#182c3d" text-anchor="start" font-weight="400">Prefix cache ON · CUDA graphs ON · two repeats per offered load · 15 s measurement</text>
+<text x="85" y="110" font-family="Arial,sans-serif" font-size="15" fill="#182c3d" text-anchor="start" font-weight="700">Completed requests / second</text>
+<line x1="85" y1="415.0" x2="945" y2="415.0" stroke="#dce4eb" stroke-width="1"/>
+<text x="77" y="420.0" font-family="Arial,sans-serif" font-size="12" fill="#182c3d" text-anchor="end" font-weight="400">0</text>
+<line x1="85" y1="342.5" x2="945" y2="342.5" stroke="#dce4eb" stroke-width="1"/>
+<text x="77" y="347.5" font-family="Arial,sans-serif" font-size="12" fill="#182c3d" text-anchor="end" font-weight="400">6</text>
+<line x1="85" y1="270.0" x2="945" y2="270.0" stroke="#dce4eb" stroke-width="1"/>
+<text x="77" y="275.0" font-family="Arial,sans-serif" font-size="12" fill="#182c3d" text-anchor="end" font-weight="400">12</text>
+<line x1="85" y1="197.5" x2="945" y2="197.5" stroke="#dce4eb" stroke-width="1"/>
+<text x="77" y="202.5" font-family="Arial,sans-serif" font-size="12" fill="#182c3d" text-anchor="end" font-weight="400">18</text>
+<line x1="85" y1="125.0" x2="945" y2="125.0" stroke="#dce4eb" stroke-width="1"/>
+<text x="77" y="130.0" font-family="Arial,sans-serif" font-size="12" fill="#182c3d" text-anchor="end" font-weight="400">24</text>
+<line x1="85" y1="125" x2="85" y2="415" stroke="#182c3d" stroke-width="1"/>
+<line x1="85.0" y1="410.517559237617" x2="125.95238095238095" y2="396.8303052473707" stroke="#2563a6" stroke-width="3"/>
+<line x1="125.95238095238095" y1="396.8303052473707" x2="289.76190476190476" y2="346.721737432891" stroke="#2563a6" stroke-width="3"/>
+<line x1="289.76190476190476" y1="346.721737432891" x2="508.17460317460313" y2="304.82383156662706" stroke="#2563a6" stroke-width="3"/>
+<line x1="508.17460317460313" y1="304.82383156662706" x2="945.0" y2="249.0931678205427" stroke="#2563a6" stroke-width="3"/>
+<circle cx="85.0" cy="410.517559237617" r="4" fill="#2563a6" stroke="#fff"/>
+<circle cx="125.95238095238095" cy="396.8303052473707" r="4" fill="#2563a6" stroke="#fff"/>
+<circle cx="289.76190476190476" cy="346.721737432891" r="4" fill="#2563a6" stroke="#fff"/>
+<circle cx="508.17460317460313" cy="304.82383156662706" r="4" fill="#2563a6" stroke="#fff"/>
+<circle cx="945.0" cy="249.0931678205427" r="4" fill="#2563a6" stroke="#fff"/>
+<line x1="85.0" y1="400.20165903721465" x2="125.95238095238095" y2="369.16789769830535" stroke="#c65d24" stroke-width="3"/>
+<line x1="125.95238095238095" y1="369.16789769830535" x2="289.76190476190476" y2="317.4550362264798" stroke="#c65d24" stroke-width="3"/>
+<line x1="289.76190476190476" y1="317.4550362264798" x2="508.17460317460313" y2="244.69667852414844" stroke="#c65d24" stroke-width="3"/>
+<line x1="508.17460317460313" y1="244.69667852414844" x2="945.0" y2="165.3981034535666" stroke="#c65d24" stroke-width="3"/>
+<circle cx="85.0" cy="400.20165903721465" r="4" fill="#c65d24" stroke="#fff"/>
+<circle cx="125.95238095238095" cy="369.16789769830535" r="4" fill="#c65d24" stroke="#fff"/>
+<circle cx="289.76190476190476" cy="317.4550362264798" r="4" fill="#c65d24" stroke="#fff"/>
+<circle cx="508.17460317460313" cy="244.69667852414844" r="4" fill="#c65d24" stroke="#fff"/>
+<circle cx="945.0" cy="165.3981034535666" r="4" fill="#c65d24" stroke="#fff"/>
+<line x1="85.0" y1="410.6521317687983" x2="125.95238095238095" y2="398.5349230170692" stroke="#168477" stroke-width="3"/>
+<line x1="125.95238095238095" y1="398.5349230170692" x2="289.76190476190476" y2="365.3975647063686" stroke="#168477" stroke-width="3"/>
+<line x1="289.76190476190476" y1="365.3975647063686" x2="508.17460317460313" y2="338.08915295101303" stroke="#168477" stroke-width="3"/>
+<line x1="508.17460317460313" y1="338.08915295101303" x2="945.0" y2="285.1866158961642" stroke="#168477" stroke-width="3"/>
+<circle cx="85.0" cy="410.6521317687983" r="4" fill="#168477" stroke="#fff"/>
+<circle cx="125.95238095238095" cy="398.5349230170692" r="4" fill="#168477" stroke="#fff"/>
+<circle cx="289.76190476190476" cy="365.3975647063686" r="4" fill="#168477" stroke="#fff"/>
+<circle cx="508.17460317460313" cy="338.08915295101303" r="4" fill="#168477" stroke="#fff"/>
+<circle cx="945.0" cy="285.1866158961642" r="4" fill="#168477" stroke="#fff"/>
+<text x="85.0" y="437" font-family="Arial,sans-serif" font-size="13" fill="#182c3d" text-anchor="middle" font-weight="400">1</text>
+<text x="125.95238095238095" y="437" font-family="Arial,sans-serif" font-size="13" fill="#182c3d" text-anchor="middle" font-weight="400">4</text>
+<text x="289.76190476190476" y="437" font-family="Arial,sans-serif" font-size="13" fill="#182c3d" text-anchor="middle" font-weight="400">16</text>
+<text x="508.17460317460313" y="437" font-family="Arial,sans-serif" font-size="13" fill="#182c3d" text-anchor="middle" font-weight="400">32</text>
+<text x="945.0" y="437" font-family="Arial,sans-serif" font-size="13" fill="#182c3d" text-anchor="middle" font-weight="400">64</text>
+<text x="500" y="462" font-family="Arial,sans-serif" font-size="15" fill="#182c3d" text-anchor="middle" font-weight="400">Offered closed-loop concurrency (clients)</text>
+<text x="85" y="488" font-family="Arial,sans-serif" font-size="13" fill="#2563a6" text-anchor="start" font-weight="400">Interactive: 128 in / 256 out</text>
+<text x="385" y="488" font-family="Arial,sans-serif" font-size="13" fill="#c65d24" text-anchor="start" font-weight="400">Prefill: 2048 in / 64 out</text>
+<text x="685" y="488" font-family="Arial,sans-serif" font-size="13" fill="#168477" text-anchor="start" font-weight="400">Mixed: 128 or 2048 in / 256 out</text>
+<text x="35" y="526" font-family="Arial,sans-serif" font-size="12" fill="#182c3d" text-anchor="start" font-weight="400">Source: pilot_profiles.csv · short sweep selects load regions; it does not establish a GPU saturation knee.</text>
+<text x="35" y="545" font-family="Arial,sans-serif" font-size="12" fill="#182c3d" text-anchor="start" font-weight="400">A100 80GB PCIe · Qwen2.5-7B-Instruct BF16 · patched vLLM 0.28.0 · captured evidence</text>
+</svg>

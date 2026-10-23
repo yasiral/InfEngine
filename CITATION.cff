@@ -1,0 +1,10 @@
+cff-version: 1.2.0
+message: "Please cite InfEngine and identify the evidence release when using its measurements."
+title: "InfEngine: runtime control and workload evaluation for patched vLLM and SGLang"
+type: software
+authors:
+  - name: PuristanLabs
+repository-code: "https://github.com/yasiral/InfEngine"
+url: "https://puristan.com/posts/infengine-runtime-control/"
+license: Apache-2.0
+version: "0.1.0"

@@ -1,0 +1,12 @@
+flowchart TB
+  I[Operator intent] --> C[Capability contract]
+  C --> V[Type, live bounds and engine support]
+  V --> H[HOT bounded runtime policy]
+  V --> D[DRAIN requires supported quiescence path]
+  V --> O[One-shot operation with explicit outcome]
+  V --> U[Unsupported: reject before application]
+  H --> M[Native mapping and scope]
+  M --> X[vLLM total-step scheduling semantics]
+  M --> Y[SGLang prefill-admission semantics]
+  D --> Q[Busy or unavailable path: BLOCKED]
+  O --> N[Do not persist as desired configuration]

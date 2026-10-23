@@ -1,0 +1,701 @@
+{
+  "provenance": "Sanitized selected pair-1 native histogram windows from New folder/m12_a100_validation.zip; verified in editorial evidence reconstruction.",
+  "smoke": {
+    "runtime_concurrency": [
+      64,
+      16,
+      64
+    ],
+    "api_server_pid": [
+      3695,
+      3695,
+      3695
+    ],
+    "inference_http_status": [
+      200,
+      200,
+      200
+    ],
+    "native_readback_verified": true
+  },
+  "histograms": {
+    "runtime_concurrency": {
+      "A": {
+        "metric": "ttft",
+        "window_seconds": 5.0,
+        "cumulative_upper_bounds": [
+          0.001,
+          0.005,
+          0.01,
+          0.02,
+          0.04,
+          0.06,
+          0.08,
+          0.1,
+          0.25,
+          0.5,
+          0.75,
+          1.0,
+          2.5,
+          5.0,
+          7.5,
+          10.0,
+          20.0,
+          40.0,
+          80.0,
+          160.0,
+          640.0,
+          2560.0,
+          "+Inf"
+        ],
+        "cumulative_counts": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          41,
+          41,
+          41,
+          41,
+          41,
+          41,
+          41,
+          41,
+          41,
+          41,
+          41
+        ],
+        "disjoint_bins": [
+          {
+            "lower_exclusive": 0,
+            "upper_inclusive": 0.001,
+            "count": 0
+          },
+          {
+            "lower_exclusive": 0.001,
+            "upper_inclusive": 0.005,
+            "count": 0
+          },
+          {
+            "lower_exclusive": 0.005,
+            "upper_inclusive": 0.01,
+            "count": 0
+          },
+          {
+            "lower_exclusive": 0.01,
+            "upper_inclusive": 0.02,
+            "count": 0
+          },
+          {
+            "lower_exclusive": 0.02,
+            "upper_inclusive": 0.04,
+            "count": 0
+          },
+          {
+            "lower_exclusive": 0.04,
+            "upper_inclusive": 0.06,
+            "count": 0
+          },
+          {
+            "lower_exclusive": 0.06,
+            "upper_inclusive": 0.08,
+            "count": 0
+          },
+          {
+            "lower_exclusive": 0.08,
+            "upper_inclusive": 0.1,
+            "count": 0
+          },
+          {
+            "lower_exclusive": 0.1,
+            "upper_inclusive": 0.25,
+            "count": 0
+          },
+          {
+            "lower_exclusive": 0.25,
+            "upper_inclusive": 0.5,
+            "count": 0
+          },
+          {
+            "lower_exclusive": 0.5,
+            "upper_inclusive": 0.75,
+            "count": 0
+          },
+          {
+            "lower_exclusive": 0.75,
+            "upper_inclusive": 1.0,
+            "count": 0
+          },
+          {
+            "lower_exclusive": 1.0,
+            "upper_inclusive": 2.5,
+            "count": 41
+          },
+          {
+            "lower_exclusive": 2.5,
+            "upper_inclusive": 5.0,
+            "count": 0
+          },
+          {
+            "lower_exclusive": 5.0,
+            "upper_inclusive": 7.5,
+            "count": 0
+          },
+          {
+            "lower_exclusive": 7.5,
+            "upper_inclusive": 10.0,
+            "count": 0
+          },
+          {
+            "lower_exclusive": 10.0,
+            "upper_inclusive": 20.0,
+            "count": 0
+          },
+          {
+            "lower_exclusive": 20.0,
+            "upper_inclusive": 40.0,
+            "count": 0
+          },
+          {
+            "lower_exclusive": 40.0,
+            "upper_inclusive": 80.0,
+            "count": 0
+          },
+          {
+            "lower_exclusive": 80.0,
+            "upper_inclusive": 160.0,
+            "count": 0
+          },
+          {
+            "lower_exclusive": 160.0,
+            "upper_inclusive": 640.0,
+            "count": 0
+          },
+          {
+            "lower_exclusive": 640.0,
+            "upper_inclusive": 2560.0,
+            "count": 0
+          },
+          {
+            "lower_exclusive": 2560.0,
+            "upper_inclusive": "+Inf",
+            "count": 0
+          }
+        ],
+        "total": 41
+      },
+      "B": {
+        "metric": "ttft",
+        "window_seconds": 5.0,
+        "cumulative_upper_bounds": [
+          0.001,
+          0.005,
+          0.01,
+          0.02,
+          0.04,
+          0.06,
+          0.08,
+          0.1,
+          0.25,
+          0.5,
+          0.75,
+          1.0,
+          2.5,
+          5.0,
+          7.5,
+          10.0,
+          20.0,
+          40.0,
+          80.0,
+          160.0,
+          640.0,
+          2560.0,
+          "+Inf"
+        ],
+        "cumulative_counts": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          15,
+          15,
+          15,
+          15,
+          15,
+          15,
+          15
+        ],
+        "disjoint_bins": [
+          {
+            "lower_exclusive": 0,
+            "upper_inclusive": 0.001,
+            "count": 0
+          },
+          {
+            "lower_exclusive": 0.001,
+            "upper_inclusive": 0.005,
+            "count": 0
+          },
+          {
+            "lower_exclusive": 0.005,
+            "upper_inclusive": 0.01,
+            "count": 0
+          },
+          {
+            "lower_exclusive": 0.01,
+            "upper_inclusive": 0.02,
+            "count": 0
+          },
+          {
+            "lower_exclusive": 0.02,
+            "upper_inclusive": 0.04,
+            "count": 0
+          },
+          {
+            "lower_exclusive": 0.04,
+            "upper_inclusive": 0.06,
+            "count": 0
+          },
+          {
+            "lower_exclusive": 0.06,
+            "upper_inclusive": 0.08,
+            "count": 0
+          },
+          {
+            "lower_exclusive": 0.08,
+            "upper_inclusive": 0.1,
+            "count": 0
+          },
+          {
+            "lower_exclusive": 0.1,
+            "upper_inclusive": 0.25,
+            "count": 0
+          },
+          {
+            "lower_exclusive": 0.25,
+            "upper_inclusive": 0.5,
+            "count": 0
+          },
+          {
+            "lower_exclusive": 0.5,
+            "upper_inclusive": 0.75,
+            "count": 0
+          },
+          {
+            "lower_exclusive": 0.75,
+            "upper_inclusive": 1.0,
+            "count": 0
+          },
+          {
+            "lower_exclusive": 1.0,
+            "upper_inclusive": 2.5,
+            "count": 0
+          },
+          {
+            "lower_exclusive": 2.5,
+            "upper_inclusive": 5.0,
+            "count": 0
+          },
+          {
+            "lower_exclusive": 5.0,
+            "upper_inclusive": 7.5,
+            "count": 0
+          },
+          {
+            "lower_exclusive": 7.5,
+            "upper_inclusive": 10.0,
+            "count": 0
+          },
+          {
+            "lower_exclusive": 10.0,
+            "upper_inclusive": 20.0,
+            "count": 15
+          },
+          {
+            "lower_exclusive": 20.0,
+            "upper_inclusive": 40.0,
+            "count": 0
+          },
+          {
+            "lower_exclusive": 40.0,
+            "upper_inclusive": 80.0,
+            "count": 0
+          },
+          {
+            "lower_exclusive": 80.0,
+            "upper_inclusive": 160.0,
+            "count": 0
+          },
+          {
+            "lower_exclusive": 160.0,
+            "upper_inclusive": 640.0,
+            "count": 0
+          },
+          {
+            "lower_exclusive": 640.0,
+            "upper_inclusive": 2560.0,
+            "count": 0
+          },
+          {
+            "lower_exclusive": 2560.0,
+            "upper_inclusive": "+Inf",
+            "count": 0
+          }
+        ],
+        "total": 15
+      }
+    },
+    "runtime_max_scheduled_tokens": {
+      "A": {
+        "metric": "e2e",
+        "window_seconds": 5.0,
+        "cumulative_upper_bounds": [
+          0.3,
+          0.5,
+          0.8,
+          1.0,
+          1.5,
+          2.0,
+          2.5,
+          5.0,
+          10.0,
+          15.0,
+          20.0,
+          30.0,
+          40.0,
+          50.0,
+          60.0,
+          120.0,
+          240.0,
+          480.0,
+          960.0,
+          1920.0,
+          7680.0,
+          "+Inf"
+        ],
+        "cumulative_counts": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          16,
+          16,
+          16,
+          16,
+          16,
+          16,
+          16,
+          16,
+          16,
+          16,
+          16
+        ],
+        "disjoint_bins": [
+          {
+            "lower_exclusive": 0,
+            "upper_inclusive": 0.3,
+            "count": 0
+          },
+          {
+            "lower_exclusive": 0.3,
+            "upper_inclusive": 0.5,
+            "count": 0
+          },
+          {
+            "lower_exclusive": 0.5,
+            "upper_inclusive": 0.8,
+            "count": 0
+          },
+          {
+            "lower_exclusive": 0.8,
+            "upper_inclusive": 1.0,
+            "count": 0
+          },
+          {
+            "lower_exclusive": 1.0,
+            "upper_inclusive": 1.5,
+            "count": 0
+          },
+          {
+            "lower_exclusive": 1.5,
+            "upper_inclusive": 2.0,
+            "count": 0
+          },
+          {
+            "lower_exclusive": 2.0,
+            "upper_inclusive": 2.5,
+            "count": 0
+          },
+          {
+            "lower_exclusive": 2.5,
+            "upper_inclusive": 5.0,
+            "count": 0
+          },
+          {
+            "lower_exclusive": 5.0,
+            "upper_inclusive": 10.0,
+            "count": 0
+          },
+          {
+            "lower_exclusive": 10.0,
+            "upper_inclusive": 15.0,
+            "count": 0
+          },
+          {
+            "lower_exclusive": 15.0,
+            "upper_inclusive": 20.0,
+            "count": 0
+          },
+          {
+            "lower_exclusive": 20.0,
+            "upper_inclusive": 30.0,
+            "count": 16
+          },
+          {
+            "lower_exclusive": 30.0,
+            "upper_inclusive": 40.0,
+            "count": 0
+          },
+          {
+            "lower_exclusive": 40.0,
+            "upper_inclusive": 50.0,
+            "count": 0
+          },
+          {
+            "lower_exclusive": 50.0,
+            "upper_inclusive": 60.0,
+            "count": 0
+          },
+          {
+            "lower_exclusive": 60.0,
+            "upper_inclusive": 120.0,
+            "count": 0
+          },
+          {
+            "lower_exclusive": 120.0,
+            "upper_inclusive": 240.0,
+            "count": 0
+          },
+          {
+            "lower_exclusive": 240.0,
+            "upper_inclusive": 480.0,
+            "count": 0
+          },
+          {
+            "lower_exclusive": 480.0,
+            "upper_inclusive": 960.0,
+            "count": 0
+          },
+          {
+            "lower_exclusive": 960.0,
+            "upper_inclusive": 1920.0,
+            "count": 0
+          },
+          {
+            "lower_exclusive": 1920.0,
+            "upper_inclusive": 7680.0,
+            "count": 0
+          },
+          {
+            "lower_exclusive": 7680.0,
+            "upper_inclusive": "+Inf",
+            "count": 0
+          }
+        ],
+        "total": 16
+      },
+      "B": {
+        "metric": "e2e",
+        "window_seconds": 5.0,
+        "cumulative_upper_bounds": [
+          0.3,
+          0.5,
+          0.8,
+          1.0,
+          1.5,
+          2.0,
+          2.5,
+          5.0,
+          10.0,
+          15.0,
+          20.0,
+          30.0,
+          40.0,
+          50.0,
+          60.0,
+          120.0,
+          240.0,
+          480.0,
+          960.0,
+          1920.0,
+          7680.0,
+          "+Inf"
+        ],
+        "cumulative_counts": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          15,
+          15,
+          15,
+          15,
+          15,
+          15,
+          15,
+          15,
+          15,
+          15,
+          15
+        ],
+        "disjoint_bins": [
+          {
+            "lower_exclusive": 0,
+            "upper_inclusive": 0.3,
+            "count": 0
+          },
+          {
+            "lower_exclusive": 0.3,
+            "upper_inclusive": 0.5,
+            "count": 0
+          },
+          {
+            "lower_exclusive": 0.5,
+            "upper_inclusive": 0.8,
+            "count": 0
+          },
+          {
+            "lower_exclusive": 0.8,
+            "upper_inclusive": 1.0,
+            "count": 0
+          },
+          {
+            "lower_exclusive": 1.0,
+            "upper_inclusive": 1.5,
+            "count": 0
+          },
+          {
+            "lower_exclusive": 1.5,
+            "upper_inclusive": 2.0,
+            "count": 0
+          },
+          {
+            "lower_exclusive": 2.0,
+            "upper_inclusive": 2.5,
+            "count": 0
+          },
+          {
+            "lower_exclusive": 2.5,
+            "upper_inclusive": 5.0,
+            "count": 0
+          },
+          {
+            "lower_exclusive": 5.0,
+            "upper_inclusive": 10.0,
+            "count": 0
+          },
+          {
+            "lower_exclusive": 10.0,
+            "upper_inclusive": 15.0,
+            "count": 0
+          },
+          {
+            "lower_exclusive": 15.0,
+            "upper_inclusive": 20.0,
+            "count": 0
+          },
+          {
+            "lower_exclusive": 20.0,
+            "upper_inclusive": 30.0,
+            "count": 15
+          },
+          {
+            "lower_exclusive": 30.0,
+            "upper_inclusive": 40.0,
+            "count": 0
+          },
+          {
+            "lower_exclusive": 40.0,
+            "upper_inclusive": 50.0,
+            "count": 0
+          },
+          {
+            "lower_exclusive": 50.0,
+            "upper_inclusive": 60.0,
+            "count": 0
+          },
+          {
+            "lower_exclusive": 60.0,
+            "upper_inclusive": 120.0,
+            "count": 0
+          },
+          {
+            "lower_exclusive": 120.0,
+            "upper_inclusive": 240.0,
+            "count": 0
+          },
+          {
+            "lower_exclusive": 240.0,
+            "upper_inclusive": 480.0,
+            "count": 0
+          },
+          {
+            "lower_exclusive": 480.0,
+            "upper_inclusive": 960.0,
+            "count": 0
+          },
+          {
+            "lower_exclusive": 960.0,
+            "upper_inclusive": 1920.0,
+            "count": 0
+          },
+          {
+            "lower_exclusive": 1920.0,
+            "upper_inclusive": 7680.0,
+            "count": 0
+          },
+          {
+            "lower_exclusive": 7680.0,
+            "upper_inclusive": "+Inf",
+            "count": 0
+          }
+        ],
+        "total": 15
+      }
+    }
+  }
+}

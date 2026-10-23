@@ -1,0 +1,381 @@
+{
+  "method": "Median of the three within-pair B/A ratios from byte-preserved ab_per_arm.csv; archived summary retained separately.",
+  "experiments": {
+    "long_prefill_token_threshold": {
+      "req_s": {
+        "archived_summary": 1.07,
+        "per_pair_B_over_A": [
+          1.1032427528284774,
+          1.0535752016972393,
+          1.0696006951850856
+        ],
+        "recomputed_median": 1.0696006951850856
+      },
+      "tok_s": {
+        "archived_summary": 0.988,
+        "per_pair_B_over_A": [
+          0.9865735552190888,
+          0.9879909361749134,
+          0.9879158939144527
+        ],
+        "recomputed_median": 0.9879158939144527
+      },
+      "ttft_p95": {
+        "archived_summary": 1.04,
+        "per_pair_B_over_A": [
+          1.0692333671057075,
+          0.9924279039793781,
+          1.0401891252955082
+        ],
+        "recomputed_median": 1.0401891252955082
+      },
+      "e2e_p95": {
+        "archived_summary": 1.0,
+        "per_pair_B_over_A": [
+          0.9883650343990287,
+          1.0030594405594406,
+          1.000437062937063
+        ],
+        "recomputed_median": 1.000437062937063
+      },
+      "queue_p95": {
+        "archived_summary": 0.996,
+        "per_pair_B_over_A": [
+          0.9179756668761065,
+          1.0115665584415583,
+          0.9955357142857142
+        ],
+        "recomputed_median": 0.9955357142857142
+      }
+    },
+    "long_prefill_token_threshold_cacheON": {
+      "req_s": {
+        "archived_summary": 2.627,
+        "per_pair_B_over_A": [
+          2.643805006625538,
+          0.3892746788723894,
+          2.6269498207209714
+        ],
+        "recomputed_median": 2.6269498207209714
+      },
+      "tok_s": {
+        "archived_summary": 2.574,
+        "per_pair_B_over_A": [
+          2.573549450875479,
+          0.3794860420511345,
+          2.5816582777728345
+        ],
+        "recomputed_median": 2.573549450875479
+      },
+      "ttft_p95": {
+        "archived_summary": 1.073,
+        "per_pair_B_over_A": [
+          1.086335403726708,
+          1.0,
+          1.0727595385980477
+        ],
+        "recomputed_median": 1.0727595385980477
+      },
+      "e2e_p95": {
+        "archived_summary": 0.679,
+        "per_pair_B_over_A": [
+          0.5069558101472995,
+          1.9592780101254677,
+          0.6751312416066415
+        ],
+        "recomputed_median": 0.6751312416066415
+      },
+      "queue_p95": {
+        "archived_summary": 0.107,
+        "per_pair_B_over_A": [
+          0.10727272727272727,
+          22.812499999999996,
+          0.03503649635036497
+        ],
+        "recomputed_median": 0.10727272727272727
+      }
+    },
+    "runtime_concurrency": {
+      "req_s": {
+        "archived_summary": 0.709,
+        "per_pair_B_over_A": [
+          0.6710465625235875,
+          0.7365353136055481,
+          0.9009825113886419
+        ],
+        "recomputed_median": 0.7365353136055481
+      },
+      "tok_s": {
+        "archived_summary": 0.743,
+        "per_pair_B_over_A": [
+          0.7421134685965267,
+          0.7436641249861516,
+          0.6832791306461821
+        ],
+        "recomputed_median": 0.7421134685965267
+      },
+      "ttft_p95": {
+        "archived_summary": 4.609,
+        "per_pair_B_over_A": [
+          4.608567208271789,
+          8.041237113402062,
+          4.105263157894737
+        ],
+        "recomputed_median": 4.608567208271789
+      },
+      "e2e_p95": {
+        "archived_summary": 1.339,
+        "per_pair_B_over_A": [
+          1.2655367231638417,
+          1.3389830508474576,
+          1.0160365865835879
+        ],
+        "recomputed_median": 1.2655367231638417
+      },
+      "queue_p95": {
+        "archived_summary": 5.426,
+        "per_pair_B_over_A": [
+          5.425549773375864,
+          8.673400673400673,
+          3.1157476403378053
+        ],
+        "recomputed_median": 5.425549773375864
+      }
+    },
+    "runtime_concurrency_cacheON": {
+      "req_s": {
+        "archived_summary": 1.098,
+        "per_pair_B_over_A": [
+          1.0977503048530308,
+          0.42961115470094996,
+          1.4619785095522133
+        ],
+        "recomputed_median": 1.0977503048530308
+      },
+      "tok_s": {
+        "archived_summary": 1.123,
+        "per_pair_B_over_A": [
+          1.1227625159925545,
+          0.4330534946362635,
+          1.1733877771681298
+        ],
+        "recomputed_median": 1.1227625159925545
+      },
+      "ttft_p95": {
+        "archived_summary": 2.469,
+        "per_pair_B_over_A": [
+          2.4687500000000004,
+          6.367346938775512,
+          2.3189823874755384
+        ],
+        "recomputed_median": 2.4687500000000004
+      },
+      "e2e_p95": {
+        "archived_summary": 1.0,
+        "per_pair_B_over_A": [
+          1.0,
+          2.0,
+          0.7902793723689248
+        ],
+        "recomputed_median": 1.0
+      },
+      "queue_p95": {
+        "archived_summary": 5.652,
+        "per_pair_B_over_A": [
+          5.652173913043479,
+          45.55555555555555,
+          2.977099236641222
+        ],
+        "recomputed_median": 5.652173913043479
+      }
+    },
+    "runtime_concurrency_medium": {
+      "req_s": {
+        "archived_summary": 0.422,
+        "per_pair_B_over_A": [
+          0.4222106203650662,
+          0.4216827030136929,
+          0.4111406518070593
+        ],
+        "recomputed_median": 0.4216827030136929
+      },
+      "tok_s": {
+        "archived_summary": 0.417,
+        "per_pair_B_over_A": [
+          0.41555962414964526,
+          0.4260494395122542,
+          0.40193618159953304
+        ],
+        "recomputed_median": 0.41555962414964526
+      },
+      "ttft_p95": {
+        "archived_summary": 4.149,
+        "per_pair_B_over_A": [
+          4.149159663865547,
+          4.149159663865547,
+          8.087934560327199
+        ],
+        "recomputed_median": 4.149159663865547
+      },
+      "e2e_p95": {
+        "archived_summary": 1.513,
+        "per_pair_B_over_A": [
+          1.5128205128205128,
+          1.5128205128205128,
+          1.580357142857143
+        ],
+        "recomputed_median": 1.5128205128205128
+      },
+      "queue_p95": {
+        "archived_summary": 32.5,
+        "per_pair_B_over_A": [
+          14.338235294117649,
+          32.5,
+          32.5
+        ],
+        "recomputed_median": 32.5
+      }
+    },
+    "runtime_max_scheduled_tokens": {
+      "req_s": {
+        "archived_summary": 1.363,
+        "per_pair_B_over_A": [
+          1.3646617773802008,
+          1.3596414335804003,
+          1.3241312620415913
+        ],
+        "recomputed_median": 1.3596414335804003
+      },
+      "tok_s": {
+        "archived_summary": 1.21,
+        "per_pair_B_over_A": [
+          1.2100419358999994,
+          1.2062579321737144,
+          1.2047851415268624
+        ],
+        "recomputed_median": 1.2062579321737144
+      },
+      "ttft_p95": {
+        "archived_summary": 2.213,
+        "per_pair_B_over_A": [
+          2.2127659574468086,
+          2.2127659574468086,
+          2.111164813919768
+        ],
+        "recomputed_median": 2.2127659574468086
+      },
+      "e2e_p95": {
+        "archived_summary": 0.668,
+        "per_pair_B_over_A": [
+          0.6678065054211844,
+          0.6687005157260115,
+          0.669566042081589
+        ],
+        "recomputed_median": 0.6687005157260115
+      },
+      "queue_p95": {
+        "archived_summary": 1.516,
+        "per_pair_B_over_A": [
+          1.5160821643286575,
+          1.5140943622550982,
+          1.551186440677966
+        ],
+        "recomputed_median": 1.5160821643286575
+      }
+    },
+    "runtime_max_scheduled_tokens_cacheON": {
+      "req_s": {
+        "archived_summary": 2.931,
+        "per_pair_B_over_A": [
+          2.930610527557755,
+          0.42338865248614493,
+          2.960245929123254
+        ],
+        "recomputed_median": 2.930610527557755
+      },
+      "tok_s": {
+        "archived_summary": 2.688,
+        "per_pair_B_over_A": [
+          2.7033640859868933,
+          0.46492956481660147,
+          2.688165631266496
+        ],
+        "recomputed_median": 2.688165631266496
+      },
+      "ttft_p95": {
+        "archived_summary": 2.789,
+        "per_pair_B_over_A": [
+          2.7887620309394845,
+          4.0,
+          2.7683954850692953
+        ],
+        "recomputed_median": 2.7887620309394845
+      },
+      "e2e_p95": {
+        "archived_summary": 0.509,
+        "per_pair_B_over_A": [
+          0.5089325262069984,
+          1.1813620071684587,
+          0.5036644316232652
+        ],
+        "recomputed_median": 0.5089325262069984
+      },
+      "queue_p95": {
+        "archived_summary": 1.214,
+        "per_pair_B_over_A": [
+          1.0851063829787233,
+          27.053824362606242,
+          1.1957671957671963
+        ],
+        "recomputed_median": 1.1957671957671963
+      }
+    },
+    "runtime_max_scheduled_tokens_medium": {
+      "req_s": {
+        "archived_summary": 0.867,
+        "per_pair_B_over_A": [
+          0.8653165851632284,
+          0.865958040873832,
+          0.8677302735268823
+        ],
+        "recomputed_median": 0.865958040873832
+      },
+      "tok_s": {
+        "archived_summary": 0.938,
+        "per_pair_B_over_A": [
+          0.9383799032029725,
+          0.9377347530521335,
+          0.93776864166203
+        ],
+        "recomputed_median": 0.93776864166203
+      },
+      "ttft_p95": {
+        "archived_summary": 0.306,
+        "per_pair_B_over_A": [
+          0.3059105431309905,
+          0.3059105431309905,
+          0.3059105431309905
+        ],
+        "recomputed_median": 0.3059105431309905
+      },
+      "e2e_p95": {
+        "archived_summary": 1.219,
+        "per_pair_B_over_A": [
+          1.2093750000000003,
+          1.2187500000000002,
+          1.2187500000000002
+        ],
+        "recomputed_median": 1.2187500000000002
+      },
+      "queue_p95": {
+        "archived_summary": 1.0,
+        "per_pair_B_over_A": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "recomputed_median": 1.0
+      }
+    }
+  }
+}

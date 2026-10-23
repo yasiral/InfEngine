@@ -1,0 +1,329 @@
+{
+  "identity before": {
+    "engine": "vllm",
+    "version": "0.28.0",
+    "api_pid": 3695
+  },
+  "inspect (original)": {
+    "desired": {},
+    "desired_revision": 0,
+    "identity": {
+      "api_pid": 3695,
+      "base_url": "http://127.0.0.1:9001",
+      "engine": "vllm",
+      "engine_instance_id": "vllm:http://127.0.0.1:9001",
+      "version": "0.28.0"
+    },
+    "observed": {
+      "long_prefill_token_threshold": 0,
+      "reset_prefix_cache": 0,
+      "runtime_kv_watermark": 0.0,
+      "runtime_max_running_seqs": 64,
+      "runtime_max_scheduled_tokens": 8192,
+      "runtime_reserve_full_isl": true
+    },
+    "status": null
+  },
+  "capabilities --supported-only": [
+    {
+      "description": "",
+      "dtype": "int",
+      "engine": [
+        "vllm"
+      ],
+      "family": "prefill",
+      "intent": "long_prefill_token_threshold",
+      "internal_key": "long_prefill_token_threshold",
+      "max": null,
+      "min": 0,
+      "operation": false,
+      "quiescence_requirement": null,
+      "quiescence_strategy": null,
+      "requires_quiescence": false,
+      "scope": null,
+      "semantic": "LONG_PREFILL_TOKEN_THRESHOLD",
+      "supported": true,
+      "supported_on_selected_engine": true,
+      "transition": "HOT"
+    },
+    {
+      "description": "Common concurrency intent. Maps to vLLM runtime_max_running_seqs and SGLang runtime_max_running_seqs (pp_max_micro_batch_size). A CONCURRENCY_UPPER_BOUND, not an exact N-request guarantee; engine scope/bounds are preserved.",
+      "dtype": "int",
+      "engine": [
+        "vllm",
+        "sglang"
+      ],
+      "family": "concurrency",
+      "intent": "runtime_concurrency",
+      "internal_key": "runtime_max_running_seqs",
+      "max": 64,
+      "min": 1,
+      "operation": false,
+      "quiescence_requirement": null,
+      "quiescence_strategy": null,
+      "requires_quiescence": false,
+      "scope": null,
+      "semantic": "CONCURRENCY_UPPER_BOUND",
+      "supported": true,
+      "supported_on_selected_engine": true,
+      "transition": "HOT"
+    },
+    {
+      "description": "",
+      "dtype": "float",
+      "engine": [
+        "vllm"
+      ],
+      "family": "kv",
+      "intent": "runtime_kv_watermark",
+      "internal_key": "runtime_kv_watermark",
+      "max": 1.0,
+      "min": 0.0,
+      "operation": false,
+      "quiescence_requirement": null,
+      "quiescence_strategy": null,
+      "requires_quiescence": false,
+      "scope": null,
+      "semantic": "KV_ADMISSION_WATERMARK",
+      "supported": true,
+      "supported_on_selected_engine": true,
+      "transition": "HOT"
+    },
+    {
+      "description": "",
+      "dtype": "int",
+      "engine": [
+        "vllm",
+        "sglang"
+      ],
+      "family": "concurrency",
+      "intent": "runtime_max_running_seqs",
+      "internal_key": "runtime_max_running_seqs",
+      "max": 64,
+      "min": 1,
+      "operation": false,
+      "quiescence_requirement": null,
+      "quiescence_strategy": null,
+      "requires_quiescence": false,
+      "scope": null,
+      "semantic": "CONCURRENCY_UPPER_BOUND",
+      "supported": true,
+      "supported_on_selected_engine": true,
+      "transition": "HOT"
+    },
+    {
+      "description": "vLLM-only strict per-step total scheduled-token budget. NOT the SGLang prefill-admission budget; never translated to it.",
+      "dtype": "int",
+      "engine": [
+        "vllm"
+      ],
+      "family": "work_budget",
+      "intent": "runtime_max_scheduled_tokens",
+      "internal_key": "runtime_max_scheduled_tokens",
+      "max": 8192,
+      "min": 1,
+      "operation": false,
+      "quiescence_requirement": null,
+      "quiescence_strategy": null,
+      "requires_quiescence": false,
+      "scope": null,
+      "semantic": "STRICT_SCHEDULED_TOKEN_BUDGET",
+      "supported": true,
+      "supported_on_selected_engine": true,
+      "transition": "HOT"
+    },
+    {
+      "description": "",
+      "dtype": "bool",
+      "engine": [
+        "vllm"
+      ],
+      "family": "kv",
+      "intent": "runtime_reserve_full_isl",
+      "internal_key": "runtime_reserve_full_isl",
+      "max": null,
+      "min": null,
+      "operation": false,
+      "quiescence_requirement": null,
+      "quiescence_strategy": null,
+      "requires_quiescence": false,
+      "scope": null,
+      "semantic": "RESERVE_FULL_ISL",
+      "supported": true,
+      "supported_on_selected_engine": true,
+      "transition": "HOT"
+    }
+  ],
+  "raw controls before": {
+    "policies": {
+      "long_prefill_token_threshold": 0,
+      "runtime_max_running_seqs": 64,
+      "runtime_max_scheduled_tokens": 8192,
+      "runtime_kv_watermark": 0.0,
+      "runtime_reserve_full_isl": true
+    },
+    "provisioned": {
+      "max_num_seqs": 64,
+      "max_num_batched_tokens": 8192,
+      "max_num_scheduled_tokens": 8192,
+      "num_gpu_blocks": 65251
+    }
+  },
+  "set runtime_concurrency 16": {
+    "desired": {
+      "runtime_max_running_seqs": 16
+    },
+    "desired_revision": 1,
+    "identity": {
+      "api_pid": 3695,
+      "base_url": "http://127.0.0.1:9001",
+      "engine": "vllm",
+      "engine_instance_id": "vllm:http://127.0.0.1:9001",
+      "version": "0.28.0"
+    },
+    "observed": {
+      "long_prefill_token_threshold": 0,
+      "reset_prefix_cache": 0,
+      "runtime_kv_watermark": 0.0,
+      "runtime_max_running_seqs": 16,
+      "runtime_max_scheduled_tokens": 8192,
+      "runtime_reserve_full_isl": true
+    },
+    "plan": {
+      "transitions": [
+        {
+          "desired": 16,
+          "observed_before": 64,
+          "operation": false,
+          "param": "runtime_max_running_seqs",
+          "reason": null,
+          "status": "EXECUTE",
+          "transition": "HOT"
+        }
+      ],
+      "valid": true
+    },
+    "status": "CONVERGED",
+    "steps": [
+      {
+        "desired": 16,
+        "observed_after": 16,
+        "observed_before": 64,
+        "param": "runtime_max_running_seqs",
+        "reason": null,
+        "status": "VERIFIED",
+        "transition": "HOT"
+      }
+    ]
+  },
+  "raw controls after set": {
+    "policies": {
+      "long_prefill_token_threshold": 0,
+      "runtime_max_running_seqs": 16,
+      "runtime_max_scheduled_tokens": 8192,
+      "runtime_kv_watermark": 0.0,
+      "runtime_reserve_full_isl": true
+    },
+    "provisioned": {
+      "max_num_seqs": 64,
+      "max_num_batched_tokens": 8192,
+      "max_num_scheduled_tokens": 8192,
+      "num_gpu_blocks": 65251
+    }
+  },
+  "inference while concurrency=16": {
+    "object": "text_completion",
+    "model": "Qwen/Qwen2.5-7B-Instruct",
+    "usage": {
+      "prompt_tokens": 5,
+      "total_tokens": 21,
+      "completion_tokens": 16,
+      "prompt_tokens_details": null,
+      "completion_tokens_details": null
+    }
+  },
+  "identity during (must equal before)": {
+    "engine": "vllm",
+    "version": "0.28.0",
+    "api_pid": 3695
+  },
+  "restore runtime_concurrency 64": {
+    "desired": {
+      "runtime_max_running_seqs": 64
+    },
+    "desired_revision": 2,
+    "identity": {
+      "api_pid": 3695,
+      "base_url": "http://127.0.0.1:9001",
+      "engine": "vllm",
+      "engine_instance_id": "vllm:http://127.0.0.1:9001",
+      "version": "0.28.0"
+    },
+    "observed": {
+      "long_prefill_token_threshold": 0,
+      "reset_prefix_cache": 0,
+      "runtime_kv_watermark": 0.0,
+      "runtime_max_running_seqs": 64,
+      "runtime_max_scheduled_tokens": 8192,
+      "runtime_reserve_full_isl": true
+    },
+    "plan": {
+      "transitions": [
+        {
+          "desired": 64,
+          "observed_before": 16,
+          "operation": false,
+          "param": "runtime_max_running_seqs",
+          "reason": null,
+          "status": "EXECUTE",
+          "transition": "HOT"
+        }
+      ],
+      "valid": true
+    },
+    "status": "CONVERGED",
+    "steps": [
+      {
+        "desired": 64,
+        "observed_after": 64,
+        "observed_before": 16,
+        "param": "runtime_max_running_seqs",
+        "reason": null,
+        "status": "VERIFIED",
+        "transition": "HOT"
+      }
+    ]
+  },
+  "raw controls after restore": {
+    "policies": {
+      "long_prefill_token_threshold": 0,
+      "runtime_max_running_seqs": 64,
+      "runtime_max_scheduled_tokens": 8192,
+      "runtime_kv_watermark": 0.0,
+      "runtime_reserve_full_isl": true
+    },
+    "provisioned": {
+      "max_num_seqs": 64,
+      "max_num_batched_tokens": 8192,
+      "max_num_scheduled_tokens": 8192,
+      "num_gpu_blocks": 65251
+    }
+  },
+  "inference after restore": {
+    "object": "text_completion",
+    "model": "Qwen/Qwen2.5-7B-Instruct",
+    "usage": {
+      "prompt_tokens": 5,
+      "total_tokens": 21,
+      "completion_tokens": 16,
+      "prompt_tokens_details": null,
+      "completion_tokens_details": null
+    }
+  },
+  "identity after (must equal before)": {
+    "engine": "vllm",
+    "version": "0.28.0",
+    "api_pid": 3695
+  },
+  "status_scope": "Successful completion payloads are preserved; the transcript has no explicit HTTP status line. HTTP 200 in the historical narrative is a reported engineering observation, not a status recoverable from this transcript."
+}

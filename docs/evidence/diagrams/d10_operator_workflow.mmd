@@ -1,0 +1,14 @@
+flowchart TB
+  D[Doctor, inspect and capabilities] --> C[Choose authorized workflow]
+  C --> M[Direct manual policy]
+  C --> H[Human-reviewed proposal]
+  C --> E[Explicit temporary evaluation]
+  M --> P[Conditional apply through reconciler]
+  H --> R[Register, approve and freshly revalidate]
+  R --> P
+  E --> B[Verify baseline and candidate phases]
+  B --> F[Attempt original-state restore]
+  P --> V[Native verification and durable history]
+  F --> V
+  V --> A[Inspect outcome and interpret evidence]
+  A --> S[Optional separate audit-based restore]

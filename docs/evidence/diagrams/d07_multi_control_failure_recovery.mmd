@@ -1,0 +1,14 @@
+flowchart TB
+  P[Validate whole policy and capture pre-state] --> A[Accept desired revision]
+  A --> E[Execute supported transitions]
+  E --> V{Native verification}
+  V -->|All requested values match| C[CONVERGED]
+  V -->|HOT failure or mismatch| F[FAILED application]
+  F --> R[Compensate observed HOT changes]
+  R --> B{Readback of compensation}
+  B -->|Matches pre-state| K[Recovery verified; application still FAILED]
+  B -->|Unavailable or mismatched| U[Recovery unverified; operator intervention]
+  E -->|DRAIN cannot proceed| D[BLOCKED; accepted intent not converged]
+  A -. durable intent can remain .-> S[Desired and physical state may differ]
+  K --> S
+  U --> S

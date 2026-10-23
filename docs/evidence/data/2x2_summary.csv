@@ -1,0 +1,7 @@
+cell,tok,conc,req_s_mean,req_s_cv%,tok_s_mean,ttft_p50_mean,ttft_p95_mean,ttft_p99_mean,e2e_p50_mean,e2e_p95_mean,e2e_p99_mean,queue_p95_mean,running_mean,waiting_mean,kv_mean,preempt_mean,completed_total,repeat_range_req_s%
+A,8192,64,2.7221,1.0,205.0698,15.0,19.3214,19.9,25.0,29.5,29.9,9.75,62,30,0.21,0.0,489,2.0
+B,8192,32,3.2221,0.0,208.0239,15.0,19.5,19.9,25.0,29.5,29.9,19.75,30,62,0.1029,0.0,576,0.1
+C,1024,64,2.9162,0.4,195.7887,30.0,39.0,39.8,28.9394,35.8939,36.5667,29.5,19.3333,76,0.0652,0.0,524,0.9
+D,1024,32,2.9106,0.1,195.487,30.0,39.0,39.8,30.9091,39.0909,39.9,29.5,19.6667,76,0.0652,0.0,524,0.2
+
+main_token_pct,-2.0,main_conc_pct,8.8,token_eff_conc64_pct,7.1,token_eff_conc32_pct,-9.7,interaction_abs,0.5056,interaction_pct,17.2

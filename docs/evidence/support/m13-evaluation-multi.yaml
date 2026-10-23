@@ -1,0 +1,22 @@
+experiment:
+  experiment_id: sg-two-control
+  engine: sglang
+  model: Qwen/Qwen2.5-0.5B-Instruct
+  workload:
+    profile: closed_loop
+    offered_concurrency: 4
+    duration_seconds: 12
+  baseline:
+    runtime_concurrency: 16
+    runtime_max_prefill_tokens: 16384
+  candidate:
+    runtime_concurrency: 8
+    runtime_max_prefill_tokens: 4096
+  warmup_requests: 2
+  repetitions: 2
+  alternate: true
+  measurement:
+    window_s: 5
+    poll_interval_s: 1
+    min_polls: 3
+    min_requests: 4

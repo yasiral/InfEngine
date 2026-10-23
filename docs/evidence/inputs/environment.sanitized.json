@@ -1,0 +1,178 @@
+{
+  "schema": "infengine.m12.environment/2",
+  "generated_at_utc": "2026-10-02T21:20:00Z",
+  "deployment": {
+    "method": "pip install vllm==0.28.0 (no Docker inside pod) + apply contrib/vllm/apply_hook.py + InfEngine on PYTHONPATH",
+    "vllm_version": "0.28.0",
+    "vllm_control_listener": "contrib/vllm/infengine_control.py (same process/loop as API server)",
+    "vllm_boot_args": [
+      "--model [redacted-local-path]",
+      "--served-model-name Qwen/Qwen2.5-7B-Instruct",
+      "--dtype bfloat16",
+      "--max-model-len 8192",
+      "--max-num-seqs 64",
+      "--max-num-batched-tokens 8192",
+      "--gpu-memory-utilization 0.90",
+      "--tensor-parallel-size 1",
+      "--host 127.0.0.1 --port 8000",
+      "--no-enable-log-requests",
+      "--no-enable-prefix-caching (A/B runs only; disabled to remove cache-warmth confound)"
+    ],
+    "execution_mode": "CUDA graphs ENABLED (production-like; --enforce-eager NOT used)",
+    "prefix_caching": "enabled for smoke/pilot; DISABLED for all A/B runs (reset_prefix_cache unsupported over HTTP)",
+    "provisioned_controls_initial": {
+      "max_num_seqs": 64,
+      "max_num_batched_tokens": 8192,
+      "max_num_scheduled_tokens": 8192,
+      "num_gpu_blocks": 65251
+    },
+    "provisioned_controls_noprefixcache": {
+      "max_num_seqs": 64,
+      "max_num_batched_tokens": 8192,
+      "num_gpu_blocks": 65351
+    },
+    "control_transport": "private loopback 127.0.0.1:9001, X-InfEngine-Token required (401 without)",
+    "infengine_serve": "127.0.0.1:18001, --runtime vllm, telemetry from 127.0.0.1:8000 /metrics",
+    "exposed_public_ports": "none added"
+  },
+  "model": {
+    "id": "Qwen/Qwen2.5-7B-Instruct",
+    "dtype": "bfloat16",
+    "max_model_len": 8192,
+    "size_on_disk_gb": 15,
+    "gated": false
+  },
+  "workload_profiles": {
+    "interactive": {
+      "prompt_tokens": 128,
+      "max_new_tokens": 256,
+      "note": "short input, meaningful output"
+    },
+    "prefill": {
+      "prompt_tokens": 2048,
+      "max_new_tokens": 64,
+      "note": "long input, short output"
+    },
+    "mixed": {
+      "prompt_tokens": "128:2048",
+      "max_new_tokens": 256,
+      "note": "two input-size classes sampled by seeded pool"
+    }
+  },
+  "pilot_levels": [
+    1,
+    4,
+    16,
+    32,
+    64
+  ],
+  "ab_design": {
+    "order_per_label": "A B / B A / A B (interleaved, 3 pairs = 6 runs)",
+    "same_seed_within_pair": true,
+    "seed_base_per_label": {
+      "runtime_concurrency": 11,
+      "runtime_max_scheduled_tokens": 22,
+      "long_prefill_token_threshold": 33,
+      "runtime_concurrency_medium": 44,
+      "runtime_max_scheduled_tokens_medium": 55
+    },
+    "measurement_s": 30,
+    "warmup_requests": 8,
+    "window_s": 5,
+    "poll_interval_s": 1,
+    "repeats_per_arm": 1,
+    "all_changes_via": "infengine-operator -> control plane -> adapter -> live vLLM -> raw readback"
+  },
+  "experiment": {
+    "objective": "Determine whether InfEngine live runtime controls produce measurable operational effects on a production-class GPU under realistic LLM workload",
+    "not": "another functional acceptance test",
+    "never_mutate_vllm_directly_for_tested_controls": true
+  },
+  "m12_1": {
+    "purpose": "decisive 2x2: separate runtime_max_scheduled_tokens (token budget) from runtime_concurrency (admission)",
+    "engine_change": "provisioned --max-num-seqs raised 64 -> 256 (so concurrency 64 is not the ceiling); prefix caching OFF; CUDA graphs ON; everything else unchanged",
+    "engine_config": {
+      "max_model_len": 8192,
+      "max_num_seqs": 256,
+      "max_num_batched_tokens": 8192,
+      "gpu_memory_utilization": 0.9,
+      "num_gpu_blocks": 63929,
+      "api_pid": 29781
+    },
+    "pressure_pilot": {
+      "prefill_levels": [
+        32,
+        64,
+        96,
+        128,
+        192,
+        256
+      ],
+      "prompt_tokens": 2048,
+      "max_new_tokens": 64,
+      "finding": "c=32 stable (waiting 0); c=64 waiting~10, TTFT~18s; c>=96 waiting grows (42->204), completions stall within 20s; no preemptions; KV<=31%",
+      "chosen_load": 96,
+      "why": "first level with clearly meaningful scheduler pressure while still completing (with 60s window: ~110 completions/arm) - materially more pressure than M12 HIGH (waiting~0, KV~20%)",
+      "artifact": "pilot/prefill_m12_1_result.json, pilot/confirm96/result.json"
+    },
+    "design": {
+      "cells": {
+        "A": {
+          "tokens": 8192,
+          "concurrency": 64
+        },
+        "B": {
+          "tokens": 8192,
+          "concurrency": 32
+        },
+        "C": {
+          "tokens": 1024,
+          "concurrency": 64
+        },
+        "D": {
+          "tokens": 1024,
+          "concurrency": 32
+        }
+      },
+      "offered_load": 96,
+      "blocks": 3,
+      "order": [
+        "block1: A C B D",
+        "block2: B D A C",
+        "block3: C A D B"
+      ],
+      "measurement_s": 60,
+      "warmup": 12,
+      "seed_per_block": true
+    },
+    "result": {
+      "cell_req_s_mean": {
+        "A": 2.7221,
+        "B": 3.2221,
+        "C": 2.9162,
+        "D": 2.9106
+      },
+      "cell_ttft_p95_mean_s": {
+        "A": 19.32,
+        "B": 19.5,
+        "C": 39.0,
+        "D": 39.0
+      },
+      "main_token_budget_pct_req_s": -2.0,
+      "main_concurrency_pct_req_s": 8.8,
+      "token_effect_at_conc64_pct": 7.1,
+      "token_effect_at_conc32_pct": -9.7,
+      "interaction_pct_req_s": 17.2,
+      "repeat_rel_spread_req_s_pct": {
+        "A": 2.0,
+        "B": 0.1,
+        "C": 0.9,
+        "D": 0.2
+      },
+      "conclusion": "token budget governs TTFT (~x2.0 when 8192->1024) essentially independent of concurrency; throughput interaction is real (+17.2%, sign flip between conc 64 and 32); admission/concurrency controls running/waiting/KV",
+      "artifact": "final/2x2_summary.json, twobytwo/"
+    },
+    "services_stopped_utc": "2026-10-02T22:06:00Z",
+    "gpu_released_mib": 0
+  }
+}

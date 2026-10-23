@@ -1,0 +1,16 @@
+flowchart TB
+  S[Observe-only supervisor proposal] --> R[Register exact decision and revision]
+  P[Human-authored multi-control policy] --> W[Register whole-policy hash and native pre-state]
+  R --> H[Human approve or reject]
+  W --> H
+  H -->|Reject| T[Terminal record; no mutation]
+  H -->|Approve| C[TTL, capability, revision and live-state checks]
+  C --> F[Fresh evidence required]
+  F --> A[Single-control: reproduce eligible proposal]
+  F --> B[Whole-policy: confirm captured control pre-state]
+  A --> I[Conditional PATCH through reconciler]
+  B --> I
+  I --> V[Verify all requested native values]
+  V --> K[Terminal record and verified-change cooldown]
+  C -->|Stale or unavailable| T
+  F -->|Unavailable or ineligible| T
