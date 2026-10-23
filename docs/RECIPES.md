@@ -95,7 +95,7 @@ infengine history --limit 50 --json
 
 ## How does human approval work?
 
-Single control (M7A observe → approve):
+Single control (observe → approve):
 
 ```bash
 infengine review --approver you
@@ -108,7 +108,7 @@ infengine review examples/policy-multi.yaml --approver you
 # or: infengine review --policy examples/policy-multi.yaml
 ```
 
-Both use the same M7 lifecycle. For a policy, the proposal is bound to the exact
+Both use the same approval lifecycle. For a policy, the proposal is bound to the exact
 whole-policy hash and desired revision; approval is single-use, expires (TTL),
 is re-validated against fresh evidence immediately before mutation, uses
 conditional `If-Match`, and requires whole-policy verification. Modifying any

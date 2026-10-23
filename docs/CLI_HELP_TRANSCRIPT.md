@@ -18,7 +18,7 @@ positional arguments:
     restore             restore the pre-state of a previous change
     history             show the durable change/audit history
     evaluate            run an A/B (single- or multi-control) experiment
-    review              human review: single-control M7A observe->approve, or
+    review              human review: single-control observe->approve, or
                         a multi-control policy file (infengine review <policy-
                         file>)
     serve               run the control-plane service (wraps infengine-serve)

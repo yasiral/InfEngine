@@ -4,7 +4,7 @@ InfEngine provides an inspect–apply–verify–evaluate–restore workflow for
 
 ## Experimental setup
 
-The historical M12/M12.1 measurements used one NVIDIA A100 80 GB PCIe, Qwen2.5-7B-Instruct in BF16 and patched vLLM 0.28.0. CUDA graphs stayed enabled. Initial provisioning used `max_num_seqs=64`; M12.1 restarted with a provisioned ceiling of 256 to separate runtime admission limits from that startup bound. Runtime concurrency remains a ceiling, not an exact number of active requests. The token budget is per scheduler step and includes prefill and decode tokens; it is not output length.
+The historical A100 measurements used one NVIDIA A100 80 GB PCIe, Qwen2.5-7B-Instruct in BF16 and patched vLLM 0.28.0. CUDA graphs stayed enabled. Initial provisioning used `max_num_seqs=64`; the engine was restarted before the factorial experiment with a provisioned ceiling of 256 to separate runtime admission limits from that startup bound. Runtime concurrency remains a ceiling, not an exact number of active requests. The token budget is per scheduler step and includes prefill and decode tokens; it is not output length.
 
 Initial workload profiles were interactive (128 input / 256 maximum output tokens), prefill (2048 / 64), and mixed (128 or 2048 / 256). Five offered closed-loop concurrency levels, two repeats and 15-second measurement windows produced the 15 initial pilot points. These short pilots selected load regions; they did not prove GPU saturation. Later pressure pilots tested higher offered loads and retained incomplete/drained work and evidence-window qualifications.
 
@@ -24,7 +24,7 @@ The clean A/B experiments used three pairs, 30-second measurement windows, fixed
 
 These ratios are medians of three within-pair B/A ratios. A ratio of the two marginal arm medians is a different statistic. Neither statistic describes every workload. The unchanged publication summaries contain inherited discrepancies; use [the reconciliation](support/ab-ratio-reconciliation.json) for pair-level values. Scheduler running/waiting gauges help describe each operating point but do not independently prove an internal causal mechanism.
 
-## M12.1 factorial experiment
+## Concurrency and token-budget factorial experiment
 
 The 2×2 experiment tested runtime concurrency 64/32 and total scheduled-token budget 8192/1024 with offered concurrency 96. It used three interleaved blocks and 60-second measurement windows per cell, with prefix caching disabled and a provisioned sequence ceiling of 256.
 
@@ -45,6 +45,6 @@ Native latency histogram buckets are cumulative counts; subtract adjacent bucket
 
 ## Functional coverage and remaining limitations
 
-Five vLLM and two SGLang HOT controls have documented functional acceptance. The A100 performance work covers selected vLLM controls: concurrency, scheduled-token budget and long-prefill threshold. It does not measure A100 benefits for the KV watermark, full-input reservation, or SGLang controls. The M13 extracts support multi-control evaluation and restoration reasoning; unavailable telemetry cannot demonstrate performance equivalence.
+Five vLLM and two SGLang HOT controls have documented functional acceptance. The A100 performance work covers selected vLLM controls: concurrency, scheduled-token budget and long-prefill threshold. It does not measure A100 benefits for the KV watermark, full-input reservation, or SGLang controls. The SGLang evaluation records support multi-control evaluation and restoration reasoning; unavailable telemetry cannot demonstrate performance equivalence.
 
 vLLM's coordinated multi-field operation and SGLang's sequential updates are not engine-atomic transactions. Restoration changes policy; it cannot undo completed requests or cache history. Functional readback, measurable effect and benefit for an operational objective remain separate evidence levels. See [control semantics](../CONTROL_REFERENCE.md), [the evidence ledger](EVIDENCE_LEDGER.md) and [the full article](https://puristan.com/posts/infengine-runtime-control/) for the engineering narrative and claim boundaries.

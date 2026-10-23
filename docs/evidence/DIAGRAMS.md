@@ -1,6 +1,6 @@
 # Architecture and engineering diagrams
 
-These ten Mermaid sources explain the system, native control paths and engineering workflow. They are architectural documentation, not measured performance results. For the simpler introduction, keep using the three diagrams in the main README.
+These nine Mermaid sources explain the system, native control paths and engineering workflow. They are architectural documentation, not measured performance results. For the simpler introduction, keep using the three diagrams in the main README.
 
 ## System architecture
 
@@ -58,7 +58,7 @@ sequenceDiagram
   S-->>O: Desired, observed and transition result
 ```
 
-## Vllm control path
+## vLLM control path
 
 [Mermaid source](diagrams/d03_vllm_control_path.mmd)
 
@@ -78,7 +78,7 @@ flowchart TB
   style API fill:#f3f7f9,stroke:#748895,color:#182c3d
 ```
 
-## Sglang control path
+## SGLang control path
 
 [Mermaid source](diagrams/d04_sglang_control_path.mmd)
 
@@ -179,25 +179,6 @@ flowchart TB
   W --> R[Report outcomes and availability]
   R --> F[Finally attempt original desired-state restore]
   F --> H[Human interpretation; no automatic winner]
-```
-
-## Timeline
-
-[Mermaid source](diagrams/d09_timeline.mmd)
-
-```mermaid
-flowchart TB
-  A[M1-M3: reconstructed engine and vLLM foundations] --> B[M4: native SGLang mapping and adapter]
-  B --> C[M5: quality-aware telemetry]
-  C --> D[M6: evaluation and revision discipline]
-  D --> E[M7: governed proposals and assessment]
-  E --> F[M9: measurement audit and local investigation]
-  E -. separate design branch .-> Z[M8: recurrent-model design only]
-  F --> G[M10: operator integration]
-  G --> H[M11: live functional acceptance]
-  H --> I[M12: A100 pilot and clean A/B]
-  I --> J[M12.1: concurrency-token factorial]
-  J --> K[M13: operator CLI and multi-control acceptance]
 ```
 
 ## Operator workflow

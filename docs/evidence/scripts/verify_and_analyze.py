@@ -127,7 +127,7 @@ def main():
     published_pressure = load(EVIDENCE / 'data/pilot_prefill_m12_1.json')
     # This publication JSON is a selected capture: compare every aggregate and run metric it retains.
     check(subset(pressure['levels'], published_pressure['levels']), 'Pressure pilot measurement projection differs')
-    checks.append('15 initial pilot points and complete M12.1 pressure-pilot levels')
+    checks.append('15 initial pilot points and complete prefill pressure-pilot levels')
     per_block = collect(str(inputs))
     check(len(per_block) == 12, 'Expected 12 factorial records')
     computed = summarise(per_block)

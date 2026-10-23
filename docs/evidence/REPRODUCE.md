@@ -42,6 +42,8 @@ The optional archive check verifies full-record hashes and compares every compac
 
 ## Capture environment and GPU reruns
 
-See [environment.sanitized.json](inputs/environment.sanitized.json) and the full archive's `twobytwo/` design, engine identity, engine configuration and GPU configuration records. Initial M12 provisioning and M12.1 provisioning differ; use the configuration for the experiment being examined. Loopback addresses and API PIDs are retained as technical context; account, pod, SSH and GPU identity metadata are omitted.
+See [environment.sanitized.json](inputs/environment.sanitized.json) and the full archive's `twobytwo/` design, engine identity, engine configuration and GPU configuration records. Initial A/B provisioning and factorial-experiment provisioning differ; use the configuration for the experiment being examined. Loopback addresses and API PIDs are retained as technical context; account, pod, SSH and GPU identity metadata are omitted.
 
 Offline reproduction reruns analysis of captured measurements. A fresh GPU experiment requires the pinned patched engine, model, matching hardware/provisioning and workload tooling, and control over the serving deployment. The measured InfEngine commit is not established, so an exact historical runtime rerun cannot be guaranteed. This release does not claim a new GPU run, reproduce private deployment infrastructure, or provide credentials. Use the [deployment guide](../DEPLOYMENT.md) for current functional setup; do not treat it as proof of an identical historical environment.
+
+Capture filenames and machine-readable provenance retain their original run identifiers so they continue to match the downloadable archive. The case study uses descriptive experiment names.

@@ -150,7 +150,7 @@ For a change that requires explicit human approval rather than a direct `set`/
 
 ```bash
 infengine review examples/policy-multi.yaml --approver you   # multi-control
-infengine review --approver you                              # single-control M7A
+infengine review --approver you                              # single-control
 ```
 
 A policy review binds to the exact whole policy and desired revision, expires

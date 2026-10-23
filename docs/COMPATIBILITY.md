@@ -1,14 +1,14 @@
 # InfEngine Compatibility
 
-Truthful matrix. Only tested combinations are claimed. "LIVE VERIFIED" means the
+This matrix covers tested combinations. "LIVE VERIFIED" means the
 control was exercised against a real engine and its raw readback matched
-(verified on the M11/M12 local A100/T2000 environment; re-verify per deployment
+(verified in local functional tests and the A100 study; re-verify per deployment
 with `infengine doctor` and `infengine evaluate`).
 
 | Engine | Version | Status | Supported HOT controls | Transport | Live verified |
 |---|---|---|---|---|---|
-| vLLM | 0.28.0 (patched) | supported | `runtime_concurrency`, `long_prefill_token_threshold`, `runtime_max_scheduled_tokens`, `runtime_kv_watermark`, `runtime_reserve_full_isl` | HTTP control listener (`/infengine/control/*`), token-authenticated | Yes (M11/M12) |
-| SGLang | 0.5.18 (patched) | supported | `runtime_concurrency`, `runtime_max_prefill_tokens` | native admin HTTP (`/set_internal_state`, `/server_info`, `/get_load`) | Yes (M11) |
+| vLLM | 0.28.0 (patched) | supported | `runtime_concurrency`, `long_prefill_token_threshold`, `runtime_max_scheduled_tokens`, `runtime_kv_watermark`, `runtime_reserve_full_isl` | HTTP control listener (`/infengine/control/*`), token-authenticated | Yes (functional tests and A100) |
+| SGLang | 0.5.18 (patched) | supported | `runtime_concurrency`, `runtime_max_prefill_tokens` | native admin HTTP (`/set_internal_state`, `/server_info`, `/get_load`) | Yes (functional tests) |
 | built-in LLMEngine | in-repo | development | `scheduler.max_batch`, `scheduler.chunk_size`, `kv_store.block_size`, `kv_store.num_blocks` | in-process | Yes (unit/integration) |
 
 ## One-shot operations
@@ -57,7 +57,7 @@ with `infengine doctor` and `infengine evaluate`).
 
 ## Human approval
 
-- Single-control M7A observe→approve: unchanged.
+- Single-control observe→approve workflow: supported.
 - Multi-control policy proposal/approval (`SupervisorPolicyApplication`): the
-  same M7 lifecycle extended to a whole policy map (single-use, TTL, If-Match,
+  same approval lifecycle extended to a whole policy map (single-use, TTL, If-Match,
   fresh-evidence, whole-policy verification).

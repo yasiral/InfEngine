@@ -1,6 +1,6 @@
 # Evidence ledger
 
-This reviewed ledger accompanies the unchanged publication [claims map](data/claims_evidence_map.md). Source paths and hashes are recorded in [PROVENANCE.json](PROVENANCE.json). Implementation, native acceptance, measured effect and operational benefit are different levels of evidence.
+This ledger maps the experimental claims to their supporting measurements. Source paths and hashes are recorded in [PROVENANCE.json](PROVENANCE.json). Implementation, native acceptance, measured effect and operational benefit are different levels of evidence.
 
 | Claim | Evidence | What is established / limit |
 |---|---|---|
@@ -13,11 +13,11 @@ This reviewed ledger accompanies the unchanged publication [claims map](data/cla
 | Concurrency and token budget interact | [12 per-block runs](data/2x2_per_block.csv), [summary](data/2x2_summary.json) | +0.505588 req/s descriptive interaction. 17.19% of grand mean; 18.57% of A. `interaction_pct` uses A. |
 | Lower budget changes TTFT | Same factorial captures | Means of block p95 estimates ~19–19.5 vs 39 seconds, not pooled percentiles. |
 | Native latency-window distributions | [Compact pair-1 captures](inputs/m12_a100_validation/runtime_concurrency/), [figure manifest](FIGURE_MANIFEST.md) | Adjacent differences of cumulative buckets; final 5-second windows and small samples. |
-| M13 multi-control evaluation | [Evaluator extract](support/m13-evaluator-extract.md), [policy](support/m13-evaluation-multi.yaml) | Functional evaluation/restoration context. Missing metrics or `NO_MEASURABLE_DIFFERENCE` do not prove equivalence. |
-| Architecture and milestones | [Ten diagrams](DIAGRAMS.md), [source index](support/source-index.md) | Design/engineering explanations; diagrams are not additional benchmark observations. |
+| SGLang multi-control evaluation | [Evaluator extract](support/sglang-evaluator-results.md), [policy](support/sglang-evaluation-policy.yaml) | Functional evaluation/restoration context. Missing metrics or `NO_MEASURABLE_DIFFERENCE` do not prove equivalence. |
+| Architecture and control workflows | [Nine diagrams](DIAGRAMS.md) | Design/engineering explanations; diagrams are not additional benchmark observations. |
 
 ## Provenance and scope
 
 The original measured InfEngine revision is **unknown**. Engine/model versions, workload definitions and captured configuration are available, but this is not a bit-for-bit reconstruction of the original serving environment. The current software release's 619 local passing tests are a separate historical validation result, not new GPU evidence.
 
-Publication data and existing figures are preserved as historical artifacts. Analysis checks numeric measurements against captures; it does not endorse every sentence in older embedded metadata, such as claims of a "real" interaction or percentage labels with an unstated denominator. Prefer the explicitly defined estimands in the case study and reconciliation.
+Measurement data and experimental figures are preserved as historical artifacts. Analysis checks numeric measurements against captures; it does not endorse every sentence in older embedded metadata, such as claims of a "real" interaction or percentage labels with an unstated denominator. Prefer the explicitly defined estimands in the case study and reconciliation.

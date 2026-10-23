@@ -202,7 +202,7 @@ python -m pytest -q -m "not integration"
 
 The local suite uses fakes, local HTTP fixtures and the built-in reference engine. GPU tests are separate opt-in tests for the patched runtimes. Do not run them against a shared service without authorizing the workload and policy changes.
 
-**Scope and status:** local single-GPU pilot acceptance is documented; the A100 experiment concerns patched vLLM, not SGLang. This project is not a production-certified automatic optimizer, fleet orchestrator or engine-atomic distributed controller. The release verification reports **619 local tests passed with nine live GPU tests excluded**, separate from historical live acceptance. See [release verification](docs/RELEASE_VERIFICATION.md) and [limitations](docs/COMPATIBILITY.md).
+**Scope and status:** local single-GPU pilot acceptance is documented; the A100 experiment concerns patched vLLM, not SGLang. This project is not a production-certified automatic optimizer, fleet orchestrator or engine-atomic distributed controller. The release verification reports **619 local tests passed with nine live GPU tests excluded**, separate from historical live acceptance. See [testing and validation](docs/TESTING.md) and [limitations](docs/COMPATIBILITY.md).
 
 The pilot does not establish fleet-wide coordination, cross-engine performance rankings or distributed crash-atomic state changes. Remote use needs authenticated control access, protected native administrative endpoints and externally terminated TLS. Restoration changes settings; it cannot undo completed requests or cache history.
 
@@ -214,6 +214,6 @@ InfEngine is licensed under [Apache-2.0](LICENSE); upstream patches and dependen
 
 ## Experimental evidence
 
-The measurements behind the case study are now available [in this repository](docs/evidence/README.md): **eight experimental figures, ten architecture diagrams, nine publication datasets**, compact measurement captures and offline analysis scripts. Start with the [figure gallery](docs/evidence/FIGURE_MANIFEST.md), [reviewed evidence ledger](docs/evidence/EVIDENCE_LEDGER.md) or [reproduction instructions](docs/evidence/REPRODUCE.md).
+The measurements behind the case study are now available [in this repository](docs/evidence/README.md): **eight experimental figures, nine architecture diagrams, eight measurement datasets**, compact measurement captures and offline analysis scripts. Start with the [figure gallery](docs/evidence/FIGURE_MANIFEST.md), [reviewed evidence ledger](docs/evidence/EVIDENCE_LEDGER.md) or [reproduction instructions](docs/evidence/REPRODUCE.md).
 
 The [evidence-v1 release](https://github.com/yasiral/InfEngine/releases/tag/evidence-v1) also includes a fuller sanitized measurement archive with SHA-256 checksums. This is historical A100/vLLM evidence, with workload and telemetry limitations recorded explicitly. Original data is preserved; [paired A/B ratio corrections](docs/evidence/support/ab-ratio-reconciliation.json) are published separately. Offline analysis needs only Python 3.11 and does not run a GPU workload.
